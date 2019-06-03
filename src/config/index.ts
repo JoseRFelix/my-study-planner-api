@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import * as bcrypt from 'bcrypt';
 
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -9,14 +10,8 @@ if (!envFound) {
 }
 
 export default {
-  /**
-   * Your favorite port
-   */
   port: parseInt(process.env.PORT, 10),
 
-  /**
-   * That long string from mlab
-   */
   databaseURL: process.env.MONGODB_URI,
 
   /**
@@ -26,14 +21,13 @@ export default {
 
   /**
    * Used by winston logger
-   * @TODO Wait for it...
    */
   logs: {
     level: process.env.LOG_LEVEL,
   },
 
   /**
-   * Agenda.js stuff
+   * Agenda.js
    */
   agenda: {
     dbCollection: process.env.AGENDA_DB_COLLECTION,

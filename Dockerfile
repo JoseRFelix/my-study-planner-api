@@ -1,6 +1,6 @@
-FROM node:12.0.0
+FROM node:11.15.0
 
-WORKDIR /app/my-study-planner.api
+WORKDIR /usr/src/my-study-planner-api
 
 COPY ./ ./
 
