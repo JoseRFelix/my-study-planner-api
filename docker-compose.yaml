@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  generador-facturas-api:
+    container_name: my-study-planner-docker
+    build: ./
+    command: npm run inspect
+    working_dir: /app/my-study-planner-api
+    depends_on:
+      - database
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app/my-study-planner-api
+
+  database:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
