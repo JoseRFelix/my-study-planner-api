@@ -2,6 +2,8 @@ import { Service, Inject } from 'typedi';
 import * as bcrypt from 'bcrypt';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import MailerService from './mailer';
+import { randomBytes } from 'crypto';
+import config from '../config';
 
 @Service()
 export default class AuthService {
@@ -9,7 +11,9 @@ export default class AuthService {
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser }> {
     try {
-      const hashedPassword = await bcrypt.hash(userInputDTO.password, null);
+      const saltRounds = parseInt(config.saltRounds, 10);
+
+      const hashedPassword = await bcrypt.hash(userInputDTO.password, saltRounds);
 
       const userRecord = await this.userModel.create({
         ...userInputDTO,
@@ -25,7 +29,7 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
 
-      return { user };
+      return user;
     } catch (e) {
       console.log(e);
       throw e;
@@ -38,13 +42,13 @@ export default class AuthService {
       throw new Error('User not registered');
     }
 
-    const validPassword = await bcrypt.compare(userRecord.password, password);
+    const validPassword = await bcrypt.compare(password, userRecord.password);
 
     if (validPassword) {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
 
-      return { user };
+      return user;
     } else {
       throw new Error('Invalid Password');
     }

@@ -20,6 +20,11 @@ export default {
   sessionSecret: process.env.SESSION_SECRET,
 
   /**
+   * Salt rounds for bcrypt
+   */
+  saltRounds: process.env.SALT_ROUNDS,
+
+  /**
    * Used by winston logger
    */
   logs: {

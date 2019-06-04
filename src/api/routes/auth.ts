@@ -22,7 +22,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const authServiceInstance = Container.get(AuthService);
-        const { user } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
+        const user = await authServiceInstance.SignUp(req.body as IUserInputDTO);
 
         passport.authenticate('local')(req, res, () => {
           return res.json({ user }).status(201);

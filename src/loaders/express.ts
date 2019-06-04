@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as expressSession from 'express-session';
+import * as cookieParser from 'cookie-parser';
 import routes from '../api';
 import config from '../config';
 
@@ -31,8 +32,21 @@ export default ({ app }: { app: express.Application }) => {
   // Maybe not needed anymore ?
   app.use(require('method-override')());
 
+  app.use(cookieParser());
+
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser.json());
+
+  app.use(expressSession({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
+
+  /**
+   * Passport initialization
+   */
+  require('../config/passport');
+
+  app.use(passport.initialize());
+
+  app.use(passport.session());
 
   // Load API routes
   app.use(config.api.prefix, routes);
@@ -43,15 +57,6 @@ export default ({ app }: { app: express.Application }) => {
     err['status'] = 404;
     next(err);
   });
-
-  /**
-   * Passport initialization
-   */
-  app.use(expressSession({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
-
-  app.use(passport.initialize());
-
-  app.use(passport.session());
 
   /// error handlers
   app.use((err, req, res, next) => {
