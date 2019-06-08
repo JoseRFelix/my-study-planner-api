@@ -6,6 +6,7 @@ import * as expressSession from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import routes from '../api';
 import config from '../config';
+import corsOptions from '../config/cors';
 
 export default ({ app }: { app: express.Application }) => {
   /**
@@ -25,7 +26,7 @@ export default ({ app }: { app: express.Application }) => {
   // The magic package that prevents frontend developers going nuts
   // Alternate description:
   // Enable Cross Origin Resource Sharing to all origins by default
-  app.use(cors());
+  app.use(cors(corsOptions));
 
   // Some sauce that always add since 2014
   // "Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it."
