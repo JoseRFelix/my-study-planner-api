@@ -25,6 +25,7 @@ export default (app: Router) => {
         const user = await authServiceInstance.SignUp(req.body as IUserInputDTO);
 
         passport.authenticate('local')(req, res, () => {
+          req.session.cookie.expires = false;
           return res.json({ user }).status(201);
         });
       } catch (e) {
@@ -40,11 +41,25 @@ export default (app: Router) => {
       body: Joi.object({
         email: Joi.string().required(),
         password: Joi.string().required(),
+        remember: Joi.boolean().required(),
       }),
     }),
     passport.authenticate('local'),
-    (req: Request, res: Response) => {
-      res.json({ user: req.user }).status(200);
+    (req: Request, res: Response, next: NextFunction) => {
+      try {
+        if (req.body.remember) {
+          req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; //Expires in 30 days
+        } else {
+          req.session.cookie.expires = false;
+        }
+
+        res
+          .json({ user: req.user, expiresIn: req.body.remember ? req.session.cookie.maxAge / 1000 : undefined })
+          .status(200);
+      } catch (e) {
+        console.log('🔥 error ', e);
+        return next(e);
+      }
     },
   );
 };
