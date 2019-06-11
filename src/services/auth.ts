@@ -39,7 +39,9 @@ export default class AuthService {
   public async SignIn(email: string, password: string): Promise<{ user: IUser }> {
     const userRecord = await this.userModel.findOne({ email });
     if (!userRecord) {
-      throw new Error('User not registered');
+      const err =  new Error('User not registered');
+      err["status"] = 404;
+      throw err;
     }
 
     const validPassword = await bcrypt.compare(password, userRecord.password);
@@ -50,7 +52,9 @@ export default class AuthService {
 
       return user;
     } else {
-      throw new Error('Invalid Password');
+      const err =  new Error('Invalid Password');
+      err["status"] = 400;
+      throw err;
     }
   }
 
