@@ -1,4 +1,7 @@
 <h1 align="center">Welcome to My Study Planner API 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />  
+</p>
 
 > Back-End for My Study Planner
 
