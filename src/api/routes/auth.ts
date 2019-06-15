@@ -15,7 +15,9 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         name: Joi.string().required(),
-        email: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
         password: Joi.string().required(),
       }),
     }),
@@ -39,7 +41,9 @@ export default (app: Router) => {
     '/signin',
     celebrate({
       body: Joi.object({
-        email: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
         password: Joi.string().required(),
         remember: Joi.boolean().required(),
       }),

@@ -15,7 +15,7 @@ export default (app: Router) => {
     }
   });
 
-  route.get('/signout', isAuthorized, (req: Request, res: Response, next: NextFunction) => {
+  route.get('/signout', (req: Request, res: Response, next: NextFunction) => {
     try {
       req.logOut();
       res.json({ message: 'Successful sign out' }).status(200);
