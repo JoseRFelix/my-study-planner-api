@@ -58,6 +58,24 @@ export default class AuthService {
     }
   }
 
+  public async SignInGoogle(profile) {
+    try {
+      console.log(this.userModel);
+      const userRecord = await this.userModel.findOrCreate({ googleId: profile.id })
+
+      if (!userRecord) {
+        throw new Error('User cannot be created');
+      }
+
+      const user = userRecord.toObject();
+
+      return user;
+    } catch(e) {
+      console.log(e);
+      throw e;
+    }  
+  }
+
   public async deserializeUser(email: string) {
     const userRecord = await this.userModel.findOne({ email });
 

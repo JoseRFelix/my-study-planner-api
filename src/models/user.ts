@@ -1,5 +1,6 @@
 import { IUser } from '../interfaces/IUser';
 import * as mongoose from 'mongoose';
+import * as findOrCreate from 'mongoose-findorcreate';
 
 const User = new mongoose.Schema(
   {
@@ -71,5 +72,7 @@ const User = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+User.plugin(findOrCreate);
 
 export default mongoose.model<IUser & mongoose.Document>('User', User);

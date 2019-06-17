@@ -66,4 +66,10 @@ export default (app: Router) => {
       }
     },
   );
+  
+  route.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));  
+  route.get('/google/callback', passport.authenticate('google'),  (req: Request, res: Response, next: NextFunction) => {
+    res.cookie("IS_LOGGED_IN", true);
+    res.redirect("http://localhost:3001"); 
+  });  
 };

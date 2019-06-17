@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import * as bcrypt from 'bcrypt';
 
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -18,6 +17,15 @@ export default {
    * Secret Password for express-sessions
    */
   sessionSecret: process.env.SESSION_SECRET,
+
+  /**
+   *  Google OAUTH credentials
+   */
+  googleClientID: process.env.GOOGLE_CLIENT_ID,
+
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL,
 
   /**
    * Salt rounds for bcrypt
