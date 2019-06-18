@@ -1,6 +1,7 @@
 import { IUser } from '../interfaces/IUser';
 import * as mongoose from 'mongoose';
 import * as findOrCreate from 'mongoose-findorcreate';
+import { string } from 'joi';
 
 const User = new mongoose.Schema(
   {
@@ -12,12 +13,17 @@ const User = new mongoose.Schema(
 
     email: {
       type: String,
+      required: [true, 'Please enter email'],
       lowercase: true,
       unique: true,
       index: true,
     },
 
     password: String,
+
+    googleId: String,
+
+    picture: String,
 
     role: {
       type: String,

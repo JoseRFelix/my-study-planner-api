@@ -13,6 +13,8 @@ export default {
 
   databaseURL: process.env.MONGODB_URI,
 
+  siteUrl: process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SITE_URL : process.env.PRODUCTION_SITE_URL,
+
   /**
    * Secret Password for express-sessions
    */

@@ -1,4 +1,6 @@
-const whitelist = ['http://localhost:3001'];
+import * as config from '.';
+
+const whitelist = ['http://localhost:3001', 'http://' + config.default.siteUrl];
 const corsOptions = {
   origin: function(origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {

@@ -8,24 +8,27 @@ import config from '.';
 
 const LocalStrategy = pLocal.Strategy;
 const GoogleStrategy = pGoogle.Strategy;
- 
-passport.use(new GoogleStrategy({
-    clientID:     config.googleClientID,
-    clientSecret: config.googleClientSecret,
-    callbackURL: config.googleCallbackUrl,
-    passReqToCallback   : true
-  },
-  async function(request, accessToken, refreshToken, profile, done) {
-    try {
-      const authServerInstance = Container.get(AuthService);
-      const user = await authServerInstance.SignInGoogle(profile);
-      done(null, user);
-    } catch (e) {
-      console.log('🔥 error ', e);
-      done(e);
-    }
-  }
-));
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: config.googleClientID,
+      clientSecret: config.googleClientSecret,
+      callbackURL: config.googleCallbackUrl,
+      passReqToCallback: true,
+    },
+    async function(request, accessToken, refreshToken, profile, done) {
+      try {
+        const authServerInstance = Container.get(AuthService);
+        const user = await authServerInstance.SignInGoogle(profile);
+        done(null, user);
+      } catch (e) {
+        console.log('🔥 error ', e);
+        done(e);
+      }
+    },
+  ),
+);
 
 passport.use(
   new LocalStrategy(

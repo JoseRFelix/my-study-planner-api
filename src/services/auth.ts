@@ -4,6 +4,7 @@ import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import MailerService from './mailer';
 import { randomBytes } from 'crypto';
 import config from '../config';
+import passport = require('passport');
 
 @Service()
 export default class AuthService {
@@ -39,8 +40,8 @@ export default class AuthService {
   public async SignIn(email: string, password: string): Promise<{ user: IUser }> {
     const userRecord = await this.userModel.findOne({ email });
     if (!userRecord) {
-      const err =  new Error('User not registered');
-      err["status"] = 404;
+      const err = new Error('User not registered');
+      err['status'] = 404;
       throw err;
     }
 
@@ -52,28 +53,32 @@ export default class AuthService {
 
       return user;
     } else {
-      const err =  new Error('Invalid Password');
-      err["status"] = 400;
+      const err = new Error('Invalid Password');
+      err['status'] = 400;
       throw err;
     }
   }
 
   public async SignInGoogle(profile) {
     try {
-      console.log(this.userModel);
-      const userRecord = await this.userModel.findOrCreate({ googleId: profile.id })
+      const userInfo: IUser = {
+        googleId: profile.id,
+        name: profile.displayName,
+        email: profile.email,
+        picture: profile.picture,
+      };
+
+      const userRecord = await this.userModel.findOrCreate(userInfo);
 
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
-      const user = userRecord.toObject();
-
-      return user;
-    } catch(e) {
+      return userRecord.doc;
+    } catch (e) {
       console.log(e);
       throw e;
-    }  
+    }
   }
 
   public async deserializeUser(email: string) {

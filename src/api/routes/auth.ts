@@ -4,6 +4,7 @@ import * as passport from 'passport';
 import { IUserInputDTO } from '../../interfaces/IUser';
 import { celebrate, Joi } from 'celebrate';
 import AuthService from '../../services/auth';
+import config from '../../config';
 
 const route = Router();
 
@@ -28,6 +29,11 @@ export default (app: Router) => {
 
         passport.authenticate('local')(req, res, () => {
           req.session.cookie.expires = false;
+
+          res.cookie('IS_LOGGED_IN', true, {
+            httpOnly: false,
+          });
+
           return res.json({ user }).status(201);
         });
       } catch (e) {
@@ -53,23 +59,31 @@ export default (app: Router) => {
       try {
         if (req.body.remember) {
           req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; //Expires in 30 days
+          res.cookie('IS_LOGGED_IN', true, {
+            maxAge: req.session.cookie.maxAge / 1000,
+            httpOnly: false,
+          });
         } else {
+          res.cookie('IS_LOGGED_IN', true, {
+            httpOnly: false,
+          });
           req.session.cookie.expires = false;
         }
 
-        res
-          .json({ user: req.user, expiresIn: req.body.remember ? req.session.cookie.maxAge / 1000 : undefined })
-          .status(200);
+        res.json({ user: req.user }).status(200);
       } catch (e) {
         console.log('🔥 error ', e);
         return next(e);
       }
     },
   );
-  
-  route.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));  
-  route.get('/google/callback', passport.authenticate('google'),  (req: Request, res: Response, next: NextFunction) => {
-    res.cookie("IS_LOGGED_IN", true);
-    res.redirect("http://localhost:3001"); 
-  });  
+
+  route.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+  route.get('/google/callback', passport.authenticate('google'), (req: Request, res: Response, next: NextFunction) => {
+    res.cookie('IS_LOGGED_IN', true, {
+      httpOnly: false,
+    });
+    res.redirect(config.siteUrl);
+  });
 };
