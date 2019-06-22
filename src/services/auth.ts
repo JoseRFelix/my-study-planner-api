@@ -2,9 +2,7 @@ import { Service, Inject } from 'typedi';
 import * as bcrypt from 'bcrypt';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import MailerService from './mailer';
-import { randomBytes } from 'crypto';
 import config from '../config';
-import passport = require('passport');
 
 @Service()
 export default class AuthService {
