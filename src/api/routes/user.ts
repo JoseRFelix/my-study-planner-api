@@ -8,7 +8,10 @@ export default (app: Router) => {
 
   route.get('/current', isAuthorized, (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ user: req.user }).status(200);
+      const user = req.user.toObject();
+      Reflect.deleteProperty(user, 'password');
+
+      res.json({ user: user }).status(200);
     } catch (e) {
       console.log('🔥 error ', e);
       return next(e);
