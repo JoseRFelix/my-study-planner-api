@@ -36,7 +36,10 @@ export default class AuthService {
   }
 
   public async SignIn(email: string, password: string): Promise<{ user: IUser }> {
-    const userRecord = await this.userModel.findOne({ email });
+    const userRecord = await this.userModel
+      .findOne({ email })
+      .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+
     if (!userRecord) {
       const err = new Error('User not registered');
       err['status'] = 404;
@@ -66,13 +69,17 @@ export default class AuthService {
         picture: profile.picture,
       };
 
-      const userRecord = await this.userModel.findOrCreate(userInfo);
+      let userRecord = await this.userModel.findOrCreate(userInfo);
 
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
-      return userRecord.doc;
+      userRecord = await this.userModel
+        .findOne(userInfo)
+        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+
+      return userRecord;
     } catch (e) {
       console.log(e);
       throw e;
@@ -80,7 +87,10 @@ export default class AuthService {
   }
 
   public async deserializeUser(email: string) {
-    const userRecord = await this.userModel.findOne({ email });
+    const userRecord = await this.userModel.findOne({ email }).populate({
+      path: 'evaluations.createdBy',
+      select: '_id name picture',
+    });
 
     if (!userRecord) throw new Error('User not found');
 

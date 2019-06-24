@@ -8,4 +8,9 @@ export default interface IEvaluation {
   urgency: Urgency;
   description: String;
   done: boolean;
+  createdBy: {
+    _id: String;
+    name: String;
+    picture: String;
+  };
 }

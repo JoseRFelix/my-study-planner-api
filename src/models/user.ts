@@ -38,6 +38,10 @@ const User = new mongoose.Schema(
         urgency: String,
         description: String,
         done: Boolean,
+        createdBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
       },
     ],
 
@@ -52,10 +56,14 @@ const User = new mongoose.Schema(
     homework: [
       {
         subject: String,
-        dueDate: Date,
+        date: Date,
         urgency: String,
         description: String,
         done: Boolean,
+        createdBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
       },
     ],
 

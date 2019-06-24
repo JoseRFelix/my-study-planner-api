@@ -6,17 +6,24 @@ import IEvaluation from '../interfaces/IEvaluation';
 export default class EvaluationService {
   constructor(@Inject('userModel') private userModel) {}
 
-  public async Add(id: string, evaluation: IEvaluation): Promise<IEvaluation> {
+  public async Add(user: IUser, evaluation: IEvaluation): Promise<IEvaluation> {
     try {
       evaluation.done = false;
+      evaluation.createdBy = {
+        _id: user._id,
+        name: user.name,
+        picture: user.picture,
+      };
 
-      const userRecord = await this.userModel.findByIdAndUpdate(
-        id,
-        {
-          $push: { evaluations: evaluation },
-        },
-        { new: true },
-      );
+      const userRecord = await this.userModel
+        .findByIdAndUpdate(
+          user._id,
+          {
+            $push: { evaluations: evaluation },
+          },
+          { new: true },
+        )
+        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
 
       if (!userRecord) {
         throw new Error('Could not add evaluation');

@@ -4,6 +4,7 @@ import { celebrate, Joi } from 'celebrate';
 import { Container } from 'typedi';
 import EvaluationService from '../../services/evaluation';
 import IEvaluation from '../../interfaces/IEvaluation';
+import { IUser } from '../../interfaces/IUser';
 
 const route = Router();
 
@@ -29,7 +30,7 @@ export default (app: Router) => {
     async (req: Request, res: Response) => {
       try {
         const evaluationServiceInstance = Container.get(EvaluationService);
-        const evaluation = await evaluationServiceInstance.Add(req.user._id, req.body as IEvaluation);
+        const evaluation = await evaluationServiceInstance.Add(req.user as IUser, req.body as IEvaluation);
 
         res.json({ evaluation }).status(200);
       } catch (e) {
