@@ -54,14 +54,14 @@ export default (app: Router) => {
           .required(),
         description: Joi.string(),
         date: Joi.date().required(),
-        done: Joi.boolean().required(),
+        done: Joi.boolean().default(false),
       }),
     }),
     isAuthorized,
     async (req: Request, res: Response) => {
       try {
         const evaluationServiceInstance = Container.get(EvaluationService);
-        const evaluation = await evaluationServiceInstance.Update(req.user._id, req.body as IEvaluation);
+        const evaluation = await evaluationServiceInstance.Update(req.user as IUser, req.body as IEvaluation);
 
         res.json({ evaluation }).status(200);
       } catch (e) {

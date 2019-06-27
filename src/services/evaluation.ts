@@ -36,24 +36,34 @@ export default class EvaluationService {
     }
   }
 
-  public async Update(id: string, evaluation: IEvaluation): Promise<IEvaluation> {
+  public async Update(user: IUser, evaluation: IEvaluation): Promise<IEvaluation> {
     try {
-      const userRecord = await this.userModel.findOneAndUpdate(
-        {
-          _id: id,
-          'evaluations._id': evaluation._id,
-        },
-        {
-          $set: {
-            'evaluations.$.subject': evaluation.subject,
-            'evaluations.$.evaluationType': evaluation.evaluationType,
-            'evaluations.$.date': evaluation.date,
-            'evaluations.$.urgency': evaluation.urgency,
-            'evaluations.$.description': evaluation.description,
-            'evaluations.$.done': evaluation.done,
+      evaluation.createdBy = {
+        _id: user._id,
+        name: user.name,
+        picture: user.picture,
+      };
+
+      const userRecord = await this.userModel
+        .findOneAndUpdate(
+          {
+            _id: user._id,
+            'evaluations._id': evaluation._id,
           },
-        },
-      );
+          {
+            $set: {
+              'evaluations.$.subject': evaluation.subject,
+              'evaluations.$.evaluationType': evaluation.evaluationType,
+              'evaluations.$.date': evaluation.date,
+              'evaluations.$.urgency': evaluation.urgency,
+              'evaluations.$.description': evaluation.description,
+              'evaluations.$.done': evaluation.done,
+              'evaluation.$.createdBy': evaluation.createdBy,
+            },
+          },
+          { new: true },
+        )
+        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
 
       if (!userRecord) {
         throw new Error('Could not update evaluation');
