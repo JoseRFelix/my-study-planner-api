@@ -5,6 +5,7 @@ import { Container } from 'typedi';
 import EvaluationService from '../../services/evaluation';
 import IEvaluation from '../../interfaces/IEvaluation';
 import { IUser } from '../../interfaces/IUser';
+import { string } from 'joi';
 
 const route = Router();
 
@@ -55,6 +56,7 @@ export default (app: Router) => {
         description: Joi.string(),
         date: Joi.date().required(),
         done: Joi.boolean().default(false),
+        createdBy: Joi.object({ _id: Joi.string().required(), name: Joi.string().required(), picture: Joi.string() }),
       }),
     }),
     isAuthorized,

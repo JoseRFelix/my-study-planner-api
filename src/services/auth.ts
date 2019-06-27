@@ -14,7 +14,7 @@ export default class AuthService {
 
       const hashedPassword = await bcrypt.hash(userInputDTO.password, saltRounds);
 
-      const userRecord = await this.userModel.create({
+      let userRecord = await this.userModel.create({
         ...userInputDTO,
         password: hashedPassword,
       });
@@ -28,6 +28,10 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
 
+      user.evaluations = await userRecord.evaluations.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+
       return user;
     } catch (e) {
       console.log(e);
@@ -36,7 +40,7 @@ export default class AuthService {
   }
 
   public async SignIn(email: string, password: string): Promise<{ user: IUser }> {
-    const userRecord = await this.userModel
+    let userRecord = await this.userModel
       .findOne({ email })
       .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
 
@@ -51,6 +55,10 @@ export default class AuthService {
     if (validPassword) {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
+
+      user.evaluations = await userRecord.evaluations.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
 
       return user;
     } else {
@@ -71,13 +79,17 @@ export default class AuthService {
 
       let userRecord = await this.userModel.findOrCreate(userInfo);
 
+      userRecord = await this.userModel
+        .findOne(userInfo)
+        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
-      userRecord = await this.userModel
-        .findOne(userInfo)
-        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+      userRecord.evaluations = await userRecord.evaluations.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
 
       return userRecord;
     } catch (e) {
@@ -87,12 +99,16 @@ export default class AuthService {
   }
 
   public async deserializeUser(email: string) {
-    const userRecord = await this.userModel.findOne({ email }).populate({
+    let userRecord = await this.userModel.findOne({ email }).populate({
       path: 'evaluations.createdBy',
       select: '_id name picture',
     });
 
     if (!userRecord) throw new Error('User not found');
+
+    userRecord.evaluations = await userRecord.evaluations.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
 
     return userRecord;
   }
