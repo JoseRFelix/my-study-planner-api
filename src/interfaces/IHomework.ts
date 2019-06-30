@@ -3,7 +3,7 @@ import { Urgency } from './IUser';
 export default interface IHomework {
   _id: String;
   subject: String;
-  dueDate: Date;
+  date: Date;
   urgency: Urgency;
   description: String;
   done: Boolean;

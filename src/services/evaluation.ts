@@ -15,7 +15,7 @@ export default class EvaluationService {
         picture: user.picture,
       };
 
-      const userRecord = await this.userModel
+      const userRecord: IUser = await this.userModel
         .findByIdAndUpdate(
           user._id,
           {
@@ -58,7 +58,7 @@ export default class EvaluationService {
               'evaluations.$.urgency': evaluation.urgency,
               'evaluations.$.description': evaluation.description,
               'evaluations.$.done': evaluation.done,
-              'evaluation.$.createdBy': evaluation.createdBy,
+              'evaluations.$.createdBy': evaluation.createdBy,
             },
           },
           { new: true },

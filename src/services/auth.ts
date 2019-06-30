@@ -28,10 +28,6 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
 
-      user.evaluations = await userRecord.evaluations.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
-
       return user;
     } catch (e) {
       console.log(e);
@@ -40,9 +36,16 @@ export default class AuthService {
   }
 
   public async SignIn(email: string, password: string): Promise<{ user: IUser }> {
-    let userRecord = await this.userModel
-      .findOne({ email })
-      .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+    let userRecord = await this.userModel.findOne({ email }).populate([
+      {
+        path: 'evaluations.createdBy',
+        select: '_id name picture',
+      },
+      {
+        path: 'homework.createdBy',
+        select: '_id name picture',
+      },
+    ]);
 
     if (!userRecord) {
       const err = new Error('User not registered');
@@ -59,6 +62,8 @@ export default class AuthService {
       user.evaluations = await userRecord.evaluations.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
+
+      user.homework = await userRecord.homework.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
       return user;
     } else {
@@ -79,15 +84,26 @@ export default class AuthService {
 
       let userRecord = await this.userModel.findOrCreate(userInfo);
 
-      userRecord = await this.userModel
-        .findOne(userInfo)
-        .populate({ path: 'evaluations.createdBy', select: '_id name picture' });
+      userRecord = await this.userModel.findOne(userInfo).populate([
+        {
+          path: 'evaluations.createdBy',
+          select: '_id name picture',
+        },
+        {
+          path: 'homework.createdBy',
+          select: '_id name picture',
+        },
+      ]);
 
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
       userRecord.evaluations = await userRecord.evaluations.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+
+      userRecord.homework = await userRecord.homework.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
@@ -99,14 +115,24 @@ export default class AuthService {
   }
 
   public async deserializeUser(email: string) {
-    let userRecord = await this.userModel.findOne({ email }).populate({
-      path: 'evaluations.createdBy',
-      select: '_id name picture',
-    });
+    let userRecord = await this.userModel.findOne({ email }).populate([
+      {
+        path: 'evaluations.createdBy',
+        select: '_id name picture',
+      },
+      {
+        path: 'homework.createdBy',
+        select: '_id name picture',
+      },
+    ]);
 
     if (!userRecord) throw new Error('User not found');
 
     userRecord.evaluations = await userRecord.evaluations.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+
+    userRecord.homework = await userRecord.homework.sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
