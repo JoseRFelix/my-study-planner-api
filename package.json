@@ -47,7 +47,6 @@
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.13",
-    "mongoose-findorcreate": "^3.0.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth2": "^0.2.0",

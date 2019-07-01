@@ -3,7 +3,7 @@ import { Request, Response } from 'express-serve-static-core';
 
 const uploadProfilePictureLimiter = new rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
-  max: 1, // start blocking after 5 requests
+  max: 10, // start blocking after 5 requests
   handler: (req: Request, res: Response) => {
     res.status(429).json({
       errors: {

@@ -82,9 +82,7 @@ export default class AuthService {
         picture: profile.picture,
       };
 
-      let userRecord = await this.userModel.findOrCreate(userInfo);
-
-      userRecord = await this.userModel.findOne(userInfo).populate([
+      let userRecord = await this.userModel.findOne({ email: userInfo.email }).populate([
         {
           path: 'evaluations.createdBy',
           select: '_id name picture',
@@ -96,16 +94,16 @@ export default class AuthService {
       ]);
 
       if (!userRecord) {
-        throw new Error('User cannot be created');
+        userRecord = this.userModel.create(userInfo);
+      } else {
+        userRecord.evaluations = await userRecord.evaluations.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+        );
+
+        userRecord.homework = await userRecord.homework.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+        );
       }
-
-      userRecord.evaluations = await userRecord.evaluations.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
-
-      userRecord.homework = await userRecord.homework.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
 
       return userRecord;
     } catch (e) {
