@@ -12,7 +12,7 @@ export default ({ app }: { app: express.Application }) => {
   /**
    * Health Check endpoints
    */
-  app.get('/status', (req, res) => {   
+  app.get('/status', (req, res) => {
     res.status(200).end();
   });
   app.head('/status', (req, res) => {
@@ -36,7 +36,7 @@ export default ({ app }: { app: express.Application }) => {
   app.use(cookieParser());
 
   // Middleware that transforms the raw string of req.body into json
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({ limit: '2mb' }));
 
   app.use(expressSession({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
 

@@ -24,10 +24,15 @@ export default {
    *  Google OAUTH credentials
    */
   googleClientID: process.env.GOOGLE_CLIENT_ID,
-
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
-
   googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL,
+
+  /**
+   * Cloudinary credentials
+   */
+  cloudinaryName: process.env.CLOUDINARY_NAME,
+  cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
 
   /**
    * Salt rounds for bcrypt

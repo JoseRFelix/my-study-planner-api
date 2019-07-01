@@ -14,7 +14,7 @@ export default class HomeworkService {
         name: user.name,
         picture: user.picture,
       };
-      console.log(homework);
+
       const userRecord: IUser = await this.userModel
         .findByIdAndUpdate(
           user._id,
