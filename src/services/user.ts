@@ -1,6 +1,7 @@
 import { Service, Inject } from 'typedi';
 import { IUser } from '../interfaces/IUser';
 import cloudinary from '../loaders/cloudinary';
+import IUserConfig from '../interfaces/IUserConfig';
 
 @Service()
 export default class UserService {
@@ -14,7 +15,7 @@ export default class UserService {
         crop: 'pad',
       });
 
-      if (!result) throw new Error("Could'nt upload image to Cloudinary");
+      if (!result) throw new Error("Couldn't upload image to Cloudinary");
 
       const userRecord = await this.userModel.findOneAndUpdate(
         { _id: user._id },
@@ -26,9 +27,31 @@ export default class UserService {
         { new: true },
       );
 
-      if (!userRecord) throw new Error("Could'nt add image to user");
+      if (!userRecord) throw new Error("Couldn't add image to user");
 
       return userRecord.picture;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  public async ChangeConfig(_id: string, config: IUserConfig): Promise<IUserConfig> {
+    try {
+      console.log(config);
+      const userRecord: IUser = await this.userModel.findOneAndUpdate(
+        { _id },
+        {
+          $set: {
+            'configuration.darkMode': config.darkMode,
+          },
+        },
+        { new: true },
+      );
+
+      if (!userRecord) throw new Error("Couldn't update User");
+
+      return userRecord.configuration;
     } catch (e) {
       console.log(e);
       throw e;

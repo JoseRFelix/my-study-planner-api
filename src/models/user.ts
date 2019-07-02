@@ -1,7 +1,5 @@
 import { IUser } from '../interfaces/IUser';
 import * as mongoose from 'mongoose';
-import * as findOrCreate from 'mongoose-findorcreate';
-import { string } from 'joi';
 
 const User = new mongoose.Schema(
   {
@@ -28,6 +26,13 @@ const User = new mongoose.Schema(
     role: {
       type: String,
       default: 'user',
+    },
+
+    configuration: {
+      darkMode: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     evaluations: [
@@ -86,7 +91,5 @@ const User = new mongoose.Schema(
   },
   { timestamps: true },
 );
-
-User.plugin(findOrCreate);
 
 export default mongoose.model<IUser & mongoose.Document>('User', User);

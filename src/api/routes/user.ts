@@ -3,6 +3,8 @@ import { isAuthorized } from '../middlewares';
 import Container from 'typedi';
 import UserService from '../../services/user';
 import uploadProfilePictureLimiter from '../middlewares/uploadProfilePictureLimiter';
+import IUserConfig from '../../interfaces/IUserConfig';
+import { Joi, celebrate } from 'celebrate';
 
 const route = Router();
 
@@ -33,6 +35,11 @@ export default (app: Router) => {
 
   route.post(
     '/upload_profile_picture',
+    celebrate({
+      body: Joi.object({
+        image: Joi.string().required(),
+      }),
+    }),
     isAuthorized,
     uploadProfilePictureLimiter,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -41,6 +48,27 @@ export default (app: Router) => {
         const imageUrl = await userServiceInstance.UploadProfileImage(req.user, req.body.image as string);
 
         res.json({ imageUrl }).status(200);
+      } catch (e) {
+        console.log('🔥 error ', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.patch(
+    '/config',
+    celebrate({
+      body: Joi.object({
+        config: Joi.object({ darkMode: Joi.boolean() }),
+      }),
+    }),
+    isAuthorized,
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const userServiceInstance = Container.get(UserService);
+        const config = await userServiceInstance.ChangeConfig(req.user._id, req.body.config as IUserConfig);
+
+        res.json({ config }).status(200);
       } catch (e) {
         console.log('🔥 error ', e);
         return next(e);
