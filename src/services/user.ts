@@ -38,7 +38,7 @@ export default class UserService {
 
   public async ChangeConfig(_id: string, config: IUserConfig): Promise<IUserConfig> {
     try {
-      console.log(config);
+      
       const userRecord: IUser = await this.userModel.findOneAndUpdate(
         { _id },
         {
