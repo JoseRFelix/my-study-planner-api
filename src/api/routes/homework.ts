@@ -19,7 +19,7 @@ export default (app: Router) => {
         urgency: Joi.string()
           .valid('chill', 'normal', 'important')
           .required(),
-        description: Joi.string().allow(null),
+        description: Joi.string().allow(null, ""),
         date: Joi.date().required(),
       }),
     }),
@@ -46,7 +46,7 @@ export default (app: Router) => {
         urgency: Joi.string()
           .valid('chill', 'normal', 'important')
           .required(),
-        description: Joi.string().allow(null),
+        description: Joi.string().allow(null, ""),
         date: Joi.date().required(),
         done: Joi.boolean().default(false),
         createdBy: Joi.object({ _id: Joi.string().required(), name: Joi.string().required(), picture: Joi.string() }),
