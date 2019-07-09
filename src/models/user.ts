@@ -50,7 +50,7 @@ const User = new mongoose.Schema(
       },
     ],
 
-    todos: [
+    toDos: [
       {
         task: String,
         urgency: String,

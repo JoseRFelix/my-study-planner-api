@@ -29,7 +29,7 @@ export default class HomeworkService {
         throw new Error('Could not add homework');
       }
 
-      return userRecord.homework[userRecord.homework.length - 1]; //Get just added evaluation
+      return userRecord.homework[userRecord.homework.length - 1]; //Get just added homework
     } catch (e) {
       console.log(e);
       throw e;
@@ -65,7 +65,7 @@ export default class HomeworkService {
         .populate({ path: 'homework.createdBy', select: '_id name picture' });
 
       if (!userRecord) {
-        throw new Error('Could not update evaluation');
+        throw new Error('Could not update homework');
       }
 
       return homework;

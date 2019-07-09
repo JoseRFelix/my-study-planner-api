@@ -18,7 +18,7 @@ export interface IUser {
   googleId?: string;
   configuration: IUserConfig;
   evaluations?: IEvaluation[];
-  todos?: IToDo[];
+  toDos?: IToDo[];
   homework?: IHomework[];
   semesters?: { _id: String; grades: { subject: String; literalGrade: String; grade: number; credits: number }[] }[];
 }
