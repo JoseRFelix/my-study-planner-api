@@ -38,9 +38,9 @@ export default class ToDoService {
         },
         {
           $set: {
-            'todos.$.task': toDo.task,
-            'todos.$.urgency': toDo.urgency,
-            'todos.$.done': toDo.done,
+            'toDos.$.task': toDo.task,
+            'toDos.$.urgency': toDo.urgency,
+            'toDos.$.done': toDo.done,
           },
         },
         { new: true },
