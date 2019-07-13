@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as expressSession from 'express-session';
-import * as cookieParser from 'cookie-parser';
+
 import routes from '../api';
 import config from '../config';
 import corsOptions from '../config/cors';
@@ -33,12 +33,20 @@ export default ({ app }: { app: express.Application }) => {
   // Maybe not needed anymore ?
   app.use(require('method-override')());
 
-  app.use(cookieParser());
-
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser.json({ limit: '2mb' }));
 
-  app.use(expressSession({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
+  const redisStore = require('connect-redis')(expressSession);
+
+  app.use(
+    expressSession({
+      secret: config.sessionSecret,
+      resave: true,
+      saveUninitialized: true,
+      cookie: { secure: false },
+      store: new redisStore({ url: config.redisURL }),
+    }),
+  );
 
   /**
    * Passport initialization

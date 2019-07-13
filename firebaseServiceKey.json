@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "my-study-planner-245320",
+  "private_key_id": "3ac603eaa8a058ea6b668d733fb6be89cd177c5d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/Vv/vn41af9Cb\n6L7a7L3xZrcsy/HnqTjJLOJYvg5gZ75eMugmSLq72pRQkOq/lKA1VdotcSTma3l4\nPjYUsLoHuHsyiN5524cBa7uB3kb2ndrSmNrQVJ5FSMJ88p9Zcj2lThymZGZcG7Gw\nj55cd1M60hJwP3qsgsILdV0raaVC9VhwbC4vaBQyzjcjCrxzwa1CMWqzdQ+3xvwS\nIsZrF4916liYOnG1G8UL22zaWj18sOJGIadalVG0iuynegbLUBeY307bpfM7T8SD\nXzeKW3dt5Hf0WstUMd/LK6ZZxm0EziTkkOf9p+4/FlyC4IFEuzGSXPYe7u9NfLES\nBty9CixNAgMBAAECggEAFZ4yP3QS5+kt/BeBTMHXugkFZBnMxIRBhrU8A5PBkxHV\nl9X/lae89VF+VVXyN+AGc9A13NF+PkxhRn0c5hyLgCjPPofpPvJXIAl4f3VKJj3y\nhb3AZy5QTXqpgq105Im8PkuDgCcyy3BTlKO9XCwdKrWmYKlDZm9Flj7V3nxKsDRO\n+M5Vg8Lw9CToobARfHTW5/fan+3AGxfX7hRC5gwpJFP2kMAKvGU2F53mHCUC/xZ0\nxIPZAaw3wmcv+RjcyBwCaqc/4dvAob8g01HpkpYGIBatYdE3afgpRtqXNUqcOayz\nwWWnPT1OoROkodeWL8veGj2mRE2Nn1tOsYkt7m44YQKBgQDuq90RUXuNIsE7yZ/F\n34CqAbvnIa9NiYY9s1beMpu0SES16FKeYEM9NPSE24q16aYnxwJbCVWyZDJ5pslc\ndz/hnkfCVeNC2SdkBGm167dp+mamYUDJqJKVoFdfKc27hYIRiEw7fCE4AxfOPvfB\nHfot6nk6TFq9aa5BkNSXOsRFUQKBgQDNO2UliqNCPbW51DvIE6nhDELgs2q5oQ5i\n7QaLbomcIkBbHMqTpiooxKFRr2zwLFwr6onRi8GsU51S9d/Pg2JtCBrBH1lTja1G\ndr1T9yDoXfnr5w9iawlEOFogpFXIODL6RhwY2JBGpvSgOgxTZ324ZxcKZIUob+ai\npPeVgiEoPQKBgQCj/UaKLbh8wxKOZ/z10pnvNf3L0+NFnWa1YlIfnhpKBxXe/2A1\nHeNVXNtdphNq5r2Zuy2tK37McfgUijr046Lq/PxFVQov1lEwca/IpcuCb+C0FUKU\nzNTbJi6iXnDTlepG7aWjgai5ebaTqcRF1rkdb2wYWHpIhyKKPl80Adb14QKBgG0D\nHo/ZWyylULDbbcGxyCt08tUeGBNv3A9p7W8EkO2xN9PtsCDLQ1uSTknwT4InXfIp\ny3jVrlMVutxFI9O66v4VLvjj6PO7ro1eJuTBwOYMfOL0QbS6PBrTf/QUtkf6qgFM\nWkJMTh5pMkklbESlFR9tCs0HZb976Nr9m1D75RbVAoGAb64UkPq8+YKM8wUKisxt\nOWvAJ4/TC3W3O2leCbzJylP3CAiIvFDIXITR1WxEA4c3bzluFxu18FlT6yK7aFmJ\nCbZzbFp9bqKYwt4UQL7eY4G0NT/5DClNZVJI1d/6wIctghQ8jKqKiwAAFNGZtKlz\ntoRBJlTFSLAuol+AjW6wFbU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-5ujhq@my-study-planner-245320.iam.gserviceaccount.com",
+  "client_id": "103244380540206811232",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-5ujhq%40my-study-planner-245320.iam.gserviceaccount.com"
+}
