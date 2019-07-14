@@ -1,10 +1,12 @@
 import expressLoader from './express';
 import dependencyInjectorLoader from './dependencyInjector';
 import mongooseLoader from './mongoose';
+import Logger from './logger';
+import jobsLoader from './jobs';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
-  console.log('✌️ DB loaded and connected!');
+  Logger.info('✌️ DB loaded and connected!');
 
   const userModel = {
     name: 'userModel',
@@ -16,8 +18,11 @@ export default async ({ expressApp }) => {
     mongoConnection,
     models: [userModel],
   });
-  console.log('✌️ Dependency Injector loaded');
+  Logger.info('✌️ Dependency Injector loaded');
 
-  await expressLoader({ app: expressApp });
-  console.log('✌️ Express loaded');
+  await jobsLoader({ agenda });
+  Logger.info('✌️ Jobs loaded');
+
+  await expressLoader({ app: expressApp, agendaInstance: agenda });
+  Logger.info('✌️ Express loaded');
 };

@@ -3,12 +3,14 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as expressSession from 'express-session';
+import * as Agendash from 'agendash';
+import * as Agenda from 'agenda';
 
 import routes from '../api';
 import config from '../config';
 import corsOptions from '../config/cors';
 
-export default ({ app }: { app: express.Application }) => {
+export default ({ app, agendaInstance }: { app: express.Application; agendaInstance: Agenda }) => {
   /**
    * Health Check endpoints
    */
@@ -18,6 +20,8 @@ export default ({ app }: { app: express.Application }) => {
   app.head('/status', (req, res) => {
     res.status(200).end();
   });
+
+  app.use('/agendash', Agendash(agendaInstance));
 
   // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   // It shows the real origin IP in the heroku or Cloudwatch logs

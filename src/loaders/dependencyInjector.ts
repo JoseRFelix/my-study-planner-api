@@ -1,6 +1,7 @@
 import { Container } from 'typedi';
 
 import agendaFactory from './agenda';
+import LoggerInstance from './logger';
 
 export default ({ mongoConnection, models }: { mongoConnection; models: { name: string; model: any }[] }) => {
   try {
@@ -11,12 +12,14 @@ export default ({ mongoConnection, models }: { mongoConnection; models: { name: 
     const agendaInstance = agendaFactory({ mongoConnection });
 
     Container.set('agendaInstance', agendaInstance);
+    Container.set('logger', LoggerInstance);
 
-    console.log('✌️ Agenda injected into container');
+    LoggerInstance.info('✌️ Agenda injected into container');
 
     return { agenda: agendaInstance };
   } catch (e) {
-    console.log('🔥 Error on dependency injector loader %o', e);
+    LoggerInstance.error('🔥 Error on dependency injector loader: %o', e);
+
     throw e;
   }
 };
