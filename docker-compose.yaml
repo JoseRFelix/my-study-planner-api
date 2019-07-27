@@ -9,7 +9,7 @@ services:
     depends_on:
       - database
     ports:
-      - '3000:3000'
+      - '3001:3001'
     volumes:
       - ./:/usr/src/my-study-planner-api
       - /usr/src/my-study-planner-api/node_modules/

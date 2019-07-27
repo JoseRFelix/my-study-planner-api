@@ -5,7 +5,7 @@ import IUserConfig from '../interfaces/IUserConfig';
 
 @Service()
 export default class UserService {
-  constructor(@Inject('userModel') private userModel) {}
+  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
 
   public async UploadProfileImage(user: IUser, image: string): Promise<String> {
     try {

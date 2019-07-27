@@ -6,11 +6,11 @@ import admin from '../loaders/firebase';
 
 @Service()
 export default class NotifierService {
-  constructor(@Inject('userModel') private userModel, @Inject('logger') private logger) {}
+  constructor(@Inject('userModel') private userModel: Models.UserModel, @Inject('logger') private logger) {}
 
-  public async SubscribeUserToDailyAssignments(registrationToken: string): Promise<string> {
+  public async registerToken(registrationToken: string, user: IUser): Promise<string> {
     try {
-      const result = await admin.messaging().subscribeToTopic(registrationToken, 'daily-assignments');
+      const result = await this.userModel.findOneAndUpdate({ email: user.email }, { registrationToken });
 
       if (!result) throw new Error('Could not add registration token');
 
@@ -23,22 +23,43 @@ export default class NotifierService {
 
   public async MessageAll() {
     try {
-      /*const userRecord = this.userModel.findOne()
+      //User tokens with  pending homework or evaluations
+      let userTokens: any = await this.userModel
+        .find({
+          $or: [{ 'evaluations.0': { $exists: true } }, { 'homework.0': { $exists: true } }],
+        })
+        .select('registrationToken -_id');
 
-      evaluations.filter(
-        evaluation => isThisWeek(moment(evaluation.date)) && !evaluation.done
-      ).length
-      homework.filter(
-        currHomework =>
-          isThisWeek(moment(currHomework.date)) && !currHomework.done
-      ).length*/
+      if (!userTokens) return;
 
-      const message = {
-        data: { score: '850', time: '2:45' },
-        topic: 'daily-assignments',
-      };
+      //Normalize array of tokens to an array of strings
+      userTokens = userTokens.map(elem => elem.registrationToken);
 
-      const response = await admin.messaging().send(message);
+      let response;
+
+      if (userTokens.length <= 100) {
+        const message = {
+          data: { content: 'You have homework to be done or evaluations to study! Come back!' },
+          tokens: userTokens as string[],
+        };
+
+        response = await admin.messaging().sendMulticast(message);
+      } else {
+        response = [];
+
+        //If there are more than 100 users split the array
+        //into chunks and send them a hundred by a hundred
+        //This is due to firebase limitation
+        //Check: https://firebase.google.com/docs/cloud-messaging/send-message
+        for (let i = 0; i < userTokens.length; i += 100) {
+          const message = {
+            data: { content: 'You have homework to be done or evaluations to study! Come back!' },
+            tokens: userTokens.slice(i, i + 100) as string[],
+          };
+
+          await response.push(admin.messaging().sendMulticast(message));
+        }
+      }
 
       if (!response) throw new Error('Could not send message to users');
 

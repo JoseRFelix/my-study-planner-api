@@ -4,7 +4,7 @@ import IHomework from '../interfaces/IHomework';
 
 @Service()
 export default class HomeworkService {
-  constructor(@Inject('userModel') private userModel) {}
+  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
 
   public async Add(user: IUser, homework: IHomework): Promise<IHomework> {
     try {
@@ -85,7 +85,7 @@ export default class HomeworkService {
         throw new Error('Could not delete homework');
       }
 
-      return userRecord;
+      return userRecord.toObject();
     } catch (e) {
       console.log(e);
       throw e;

@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
 declare global {
   namespace Express {
@@ -17,5 +17,9 @@ declare global {
       url: string;
       secure_url: string;
     }
+  }
+
+  namespace Models {
+    export type UserModel =  Model<IUser & Document>
   }
 }

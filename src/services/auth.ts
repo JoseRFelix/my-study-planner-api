@@ -6,7 +6,7 @@ import config from '../config';
 
 @Service()
 export default class AuthService {
-  constructor(@Inject('userModel') private userModel, private mailer: MailerService) {}
+  constructor(@Inject('userModel') private userModel : Models.UserModel, private mailer: MailerService) {}
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser }> {
     try {
@@ -75,7 +75,7 @@ export default class AuthService {
 
   public async SignInGoogle(profile) {
     try {
-      const userInfo: IUser = {
+      const userInfo = {
         googleId: profile.id,
         name: profile.displayName,
         email: profile.email,
@@ -94,7 +94,7 @@ export default class AuthService {
       ]);
 
       if (!userRecord) {
-        userRecord = this.userModel.create(userInfo);
+        userRecord = await this.userModel.create(userInfo);
       } else {
         userRecord.evaluations = await userRecord.evaluations.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),

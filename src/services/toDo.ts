@@ -4,7 +4,7 @@ import IToDo from '../interfaces/IToDo';
 
 @Service()
 export default class ToDoService {
-  constructor(@Inject('userModel') private userModel) {}
+  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
 
   public async Add(user: IUser, toDo: IToDo): Promise<IToDo> {
     try {
@@ -67,7 +67,7 @@ export default class ToDoService {
         throw new Error('Could not delete to-do');
       }
 
-      return userRecord;
+      return userRecord.toObject();
     } catch (e) {
       console.log(e);
       throw e;

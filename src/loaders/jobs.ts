@@ -25,7 +25,7 @@ export default async ({ agenda }: { agenda: Agenda }) => {
 
   agenda.start();
 
-  agenda.every('00 08 * * *', 'send-morning-notifications');
+  agenda.every('00 08 * * *', 'send-morning-notification');
 
-  agenda.every('00 20 * * *', 'send-night-notifications');
+  agenda.every('00 20 * * *', 'send-night-notification');
 };

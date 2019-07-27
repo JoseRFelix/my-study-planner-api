@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import { isAuthorized } from '../middlewares';
 import NotifierService from '../../services/notifier';
+import { IUser } from '../../interfaces/IUser';
 
 const route = Router();
 
@@ -20,7 +21,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const notifier = Container.get(NotifierService);
-        const result = await notifier.SubscribeUserToDailyAssignments(req.body.registrationToken as string);
+        const result = await notifier.registerToken(req.body.registrationToken as string, req.user as IUser);
 
         return res.status(200).json(result);
       } catch (e) {

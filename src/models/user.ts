@@ -23,6 +23,8 @@ const User = new mongoose.Schema(
 
     picture: String,
 
+    registrationToken: String,
+
     role: {
       type: String,
       default: 'user',

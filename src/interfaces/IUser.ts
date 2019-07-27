@@ -16,6 +16,7 @@ export interface IUser {
   picture?: string;
   password?: string;
   googleId?: string;
+  registrationToken?: string;
   configuration: IUserConfig;
   evaluations?: IEvaluation[];
   toDos?: IToDo[];
