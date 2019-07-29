@@ -32,7 +32,9 @@ export default class UserSubscriber {
   }
   @On(events.user.signUp)
   public onUserSignUp({ name, email, _id }: Partial<IUser>) {
+    console.log('workingggg');
     try {
+      console.log('workingggg');
       /**
        * @TODO implement this
        */

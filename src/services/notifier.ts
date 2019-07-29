@@ -30,7 +30,7 @@ export default class NotifierService {
         })
         .select('registrationToken -_id');
 
-      if (!userTokens) return;
+      if (!userTokens.length) return;
 
       //Normalize array of tokens to an array of strings
       userTokens = userTokens.map(elem => elem.registrationToken);

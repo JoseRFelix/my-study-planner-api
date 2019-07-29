@@ -3,10 +3,16 @@ import * as bcrypt from 'bcrypt';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import MailerService from './mailer';
 import config from '../config';
+import events from '../subscribers/events';
+import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 
 @Service()
 export default class AuthService {
-  constructor(@Inject('userModel') private userModel : Models.UserModel, private mailer: MailerService) {}
+  constructor(
+    @Inject('userModel') private userModel: Models.UserModel,
+    @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
+    private mailer: MailerService,
+  ) {}
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser }> {
     try {
@@ -24,6 +30,8 @@ export default class AuthService {
       }
 
       await this.mailer.SendWelcomeEmail(userRecord);
+
+      this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
 
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
