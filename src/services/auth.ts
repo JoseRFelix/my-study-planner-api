@@ -1,7 +1,7 @@
 import { Service, Inject } from 'typedi';
 import * as bcrypt from 'bcrypt';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
-import MailerService from './mailer';
+import * as cryptoRandomString from 'crypto-random-string';
 import config from '../config';
 import events from '../subscribers/events';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
@@ -11,7 +11,6 @@ export default class AuthService {
   constructor(
     @Inject('userModel') private userModel: Models.UserModel,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
-    private mailer: MailerService,
   ) {}
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser }> {
@@ -19,19 +18,42 @@ export default class AuthService {
       const saltRounds = parseInt(config.saltRounds, 10);
 
       const hashedPassword = await bcrypt.hash(userInputDTO.password, saltRounds);
+      const verificationToken = cryptoRandomString({ length: 16 });
 
       let userRecord = await this.userModel.create({
         ...userInputDTO,
         password: hashedPassword,
+        verificationToken,
       });
 
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
-      await this.mailer.SendWelcomeEmail(userRecord);
+      this.eventDispatcher.dispatch(events.user.signUp, userRecord);
 
-      this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
+      const user = userRecord.toObject();
+      Reflect.deleteProperty(user, 'password');
+
+      return user;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  public async VerifyEmail(email: string, token: string): Promise<{ user: IUser }> {
+    try {
+      const userRecord = await this.userModel.findOneAndUpdate(
+        { email, verificationToken: token },
+        { $set: { verified: true } },
+      );
+
+      if (!userRecord) {
+        const err = new Error('Invalid token');
+        err['status'] = 400;
+        throw err;
+      }
 
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');

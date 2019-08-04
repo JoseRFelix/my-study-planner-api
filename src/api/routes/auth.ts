@@ -43,6 +43,29 @@ export default (app: Router) => {
     },
   );
 
+  route.get(
+    '/verification',
+    celebrate({
+      query: Joi.object({
+        email: Joi.string()
+          .email()
+          .required(),
+        token: Joi.string().required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const authServiceInstance = Container.get(AuthService);
+        const user = await authServiceInstance.VerifyEmail(req.query.email, req.query.token);
+
+        res.redirect(config.siteUrl);
+      } catch (e) {
+        console.log('🔥 error ', e);
+        return next(e);
+      }
+    },
+  );
+
   route.post(
     '/signin',
     celebrate({

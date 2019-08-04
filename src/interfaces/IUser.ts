@@ -13,6 +13,8 @@ export interface IUser {
   _id?: string;
   name: string;
   email: string;
+  verified: boolean;
+  verificationToken: string;
   picture?: string;
   password?: string;
   googleId?: string;

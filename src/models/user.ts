@@ -25,6 +25,17 @@ const User = new mongoose.Schema(
 
     registrationToken: String,
 
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+
+    verificationToken: {
+      type: String,
+      required: true,
+    },
+
     role: {
       type: String,
       default: 'user',

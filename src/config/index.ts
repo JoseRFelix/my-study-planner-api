@@ -16,6 +16,16 @@ export default {
   redisURL: process.env.REDIS_URI,
 
   siteUrl: process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SITE_URL : process.env.PRODUCTION_SITE_URL,
+  serverUrl:
+    process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SERVER_URL : process.env.PRODUCTION_SERVER_URL,
+
+  /**
+   * Nodemailer
+   */
+  nodemailer: {
+    username: process.env.NODEMAILER_USERNAME,
+    password: process.env.NODEMAILER_PASSWORD,
+  },
 
   /**
    * Secret Password for express-sessions
@@ -28,6 +38,7 @@ export default {
   googleClientID: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL,
+  googleRefreshToken: process.env.GOOGLE_REFRESH_TOKEN,
 
   /**
    * Cloudinary credentials
