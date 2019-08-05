@@ -2,7 +2,7 @@ import { Service } from 'typedi';
 import { IUser } from '../interfaces/IUser';
 import transporter from '../config/nodemailer';
 import LoggerInstance from '../loaders/logger';
-import config from '../config';
+import { verificationEmail } from '../mail';
 
 @Service()
 export default class MailerService {
@@ -12,9 +12,7 @@ export default class MailerService {
         from: '"My Study Planner" <mystudyplanner.noreply@gmail.com>',
         to: user.email,
         subject: 'Welcome to My Study Planner!!',
-        text: `Welcome to the world of never forgetting yout homework!\nBut before beginning we need you to verify your email: ${
-          config.serverUrl
-        }/api/auth/verification?token=${user.verificationToken}&email=${user.email}`,
+        html: verificationEmail(user),
       });
 
       if (!message) throw new Error("Couldn't send welcome message to user.");
