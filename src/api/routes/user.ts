@@ -5,6 +5,7 @@ import UserService from '../../services/user';
 import uploadProfilePictureLimiter from '../middlewares/uploadProfilePictureLimiter';
 import IUserConfig from '../../interfaces/IUserConfig';
 import { Joi, celebrate } from 'celebrate';
+import LoggerInstance from '../../loaders/logger';
 
 const route = Router();
 
@@ -18,17 +19,22 @@ export default (app: Router) => {
 
       res.json({ user: user }).status(200);
     } catch (e) {
-      console.log('🔥 error ', e);
+      LoggerInstance.error('🔥 error ', e);
       return next(e);
     }
   });
 
-  route.get('/signout', (req: Request, res: Response, next: NextFunction) => {
+  route.get('/signout', async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const userModel: Models.UserModel = Container.get('userModel');
+      const userEmail: string = req.user.toObject().email;
+
+      const userRecord = await userModel.findOneAndUpdate({ email: userEmail }, { fcm: false });
+
       req.logOut();
       res.json({ message: 'Successful sign out' }).status(200);
     } catch (e) {
-      console.log('🔥 error ', e);
+      LoggerInstance.error('🔥 error ', e);
       return next(e);
     }
   });
@@ -49,7 +55,7 @@ export default (app: Router) => {
 
         res.json({ imageUrl }).status(200);
       } catch (e) {
-        console.log('🔥 error ', e);
+        LoggerInstance.error('🔥 error ', e);
         return next(e);
       }
     },
@@ -70,7 +76,7 @@ export default (app: Router) => {
 
         res.json({ config }).status(200);
       } catch (e) {
-        console.log('🔥 error ', e);
+        LoggerInstance.error('🔥 error ', e);
         return next(e);
       }
     },

@@ -10,7 +10,7 @@ export default class NotifierService {
 
   public async registerToken(registrationToken: string, user: IUser): Promise<string> {
     try {
-      const result = await this.userModel.findOneAndUpdate({ email: user.email }, { registrationToken });
+      const result = await this.userModel.findOneAndUpdate({ email: user.email }, { registrationToken, fcm: true });
 
       if (!result) throw new Error('Could not add registration token');
 
@@ -26,7 +26,7 @@ export default class NotifierService {
       //User tokens with  pending homework or evaluations
       let userTokens: any = await this.userModel
         .find({
-          $or: [{ 'evaluations.0': { $exists: true } }, { 'homework.0': { $exists: true } }],
+          $and: [{ fcm: true }, { $or: [{ 'evaluations.0': { $exists: true } }, { 'homework.0': { $exists: true } }] }],
         })
         .select('registrationToken -_id');
 

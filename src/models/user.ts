@@ -17,6 +17,12 @@ const User = new mongoose.Schema(
       index: true,
     },
 
+    fcm: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+
     password: String,
 
     googleId: String,
@@ -31,10 +37,7 @@ const User = new mongoose.Schema(
       default: false,
     },
 
-    verificationToken: {
-      type: String,
-      required: true,
-    },
+    verificationToken: String,
 
     role: {
       type: String,
