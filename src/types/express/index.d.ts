@@ -20,6 +20,13 @@ declare global {
   }
 
   namespace Models {
-    export type UserModel =  Model<IUser & Document>
+    export type UserModel = Model<IUser & Document>;
+  }
+}
+
+declare module 'redis' {
+  export interface RedisClient extends NodeJS.EventEmitter {
+    setAsync(key: string, value: string): Promise<void>;
+    getAsync(key: string): Promise<string>;
   }
 }

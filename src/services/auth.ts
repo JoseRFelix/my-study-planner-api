@@ -18,7 +18,7 @@ export default class AuthService {
       const saltRounds = parseInt(config.saltRounds, 10);
 
       const hashedPassword = await bcrypt.hash(userInputDTO.password, saltRounds);
-      const verificationToken = cryptoRandomString({ length: 16 });
+      const verificationToken = cryptoRandomString({ length: 32 });
 
       let userRecord = await this.userModel.create({
         ...userInputDTO,

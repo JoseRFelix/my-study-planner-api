@@ -5,6 +5,7 @@ import { IUserInputDTO } from '../../interfaces/IUser';
 import { celebrate, Joi } from 'celebrate';
 import AuthService from '../../services/auth';
 import config from '../../config';
+import MailerService from '../../services/mailer';
 
 const route = Router();
 
