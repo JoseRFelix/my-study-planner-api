@@ -21,6 +21,12 @@ passport.use(
       try {
         const authServerInstance = Container.get(AuthService);
         const user = await authServerInstance.SignInGoogle(profile);
+
+        if (typeof user === 'string') {
+          const token = user;
+          return request.res.redirect(`${config.siteUrl}/link/google/${token}/${profile.email}`);
+        }
+
         done(null, user);
       } catch (e) {
         console.log('🔥 error ', e);

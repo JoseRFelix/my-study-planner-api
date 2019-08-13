@@ -5,6 +5,7 @@ import * as cryptoRandomString from 'crypto-random-string';
 import config from '../config';
 import events from '../subscribers/events';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
+import redisClient from '../loaders/redis';
 
 @Service()
 export default class AuthService {
@@ -103,16 +104,9 @@ export default class AuthService {
     }
   }
 
-  public async SignInGoogle(profile) {
+  public async SignInGoogle(profile): Promise<IUser | string> {
     try {
-      const userInfo = {
-        googleId: profile.id,
-        name: profile.displayName,
-        email: profile.email,
-        picture: profile.picture,
-      };
-
-      let userRecord = await this.userModel.findOne({ email: userInfo.email }).populate([
+      let userRecord = await this.userModel.findOne({ email: profile.email }).populate([
         {
           path: 'evaluations.createdBy',
           select: '_id name picture',
@@ -124,7 +118,23 @@ export default class AuthService {
       ]);
 
       if (!userRecord) {
+        const userInfo = {
+          googleId: profile.id,
+          name: profile.displayName,
+          email: profile.email,
+          picture: profile.picture,
+          verified: true,
+        };
+
         userRecord = await this.userModel.create(userInfo);
+      } else if (!userRecord.googleId) {
+        const token = cryptoRandomString({ length: 16 });
+
+        const TOKEN_EXPIRATION_TIME = 1800; //30 minutes;
+
+        redisClient.set(`gLinkAccountToken::${token}`, profile.id, 'EX', TOKEN_EXPIRATION_TIME);
+
+        return token;
       } else {
         userRecord.evaluations = await userRecord.evaluations.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),

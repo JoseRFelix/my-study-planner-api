@@ -16,7 +16,7 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         token: Joi.string().required(),
-        password: Joi.string(),
+        password: Joi.string().required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {

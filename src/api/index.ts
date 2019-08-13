@@ -6,6 +6,7 @@ import homework from './routes/homework';
 import toDo from './routes/toDo';
 import notifier from './routes/notifier';
 import recover from './routes/recover';
+import linkAccount from './routes/linkAccount';
 
 const app = Router();
 auth(app);
@@ -15,5 +16,6 @@ homework(app);
 toDo(app);
 notifier(app);
 recover(app);
+linkAccount(app);
 
 export default app;
