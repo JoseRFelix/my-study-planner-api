@@ -27,9 +27,11 @@ export default (app: Router) => {
   route.get('/signout', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userModel: Models.UserModel = Container.get('userModel');
-      const userEmail: string = req.user.toObject().email;
+      const userEmail: string = req.user && req.user.toObject().email;
 
-      const userRecord = await userModel.findOneAndUpdate({ email: userEmail }, { fcm: false });
+      if (userEmail) {
+        const userRecord = await userModel.findOneAndUpdate({ email: userEmail }, { fcm: false });
+      }
 
       req.logOut();
       res.json({ message: 'Successful sign out' }).status(200);

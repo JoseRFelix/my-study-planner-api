@@ -11,6 +11,8 @@ import config from '../config';
 import corsOptions from '../config/cors';
 
 export default ({ app, agendaInstance }: { app: express.Application; agendaInstance: Agenda }) => {
+  app.use(require('express-status-monitor')());
+
   /**
    * Health Check endpoints
    */
