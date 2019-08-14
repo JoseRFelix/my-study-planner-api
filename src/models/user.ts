@@ -31,6 +31,8 @@ const User = new mongoose.Schema(
 
     registrationToken: String,
 
+    firstSignIn: { type: Boolean, default: true, required: true },
+
     verified: {
       type: Boolean,
       required: true,

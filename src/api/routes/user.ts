@@ -83,4 +83,16 @@ export default (app: Router) => {
       }
     },
   );
+
+  route.post('/welcome', isAuthorized, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userServiceInstance = Container.get(UserService);
+      const response = await userServiceInstance.ChangeFirstSignin(req.user._id);
+
+      res.json(response).status(200);
+    } catch (e) {
+      LoggerInstance.error('🔥 error ', e);
+      return next(e);
+    }
+  });
 };

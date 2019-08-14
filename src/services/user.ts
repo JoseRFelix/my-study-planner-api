@@ -5,7 +5,7 @@ import IUserConfig from '../interfaces/IUserConfig';
 
 @Service()
 export default class UserService {
-  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
+  constructor(@Inject('userModel') private userModel: Models.UserModel, @Inject('logger') private logger) {}
 
   public async UploadProfileImage(user: IUser, image: string): Promise<String> {
     try {
@@ -31,14 +31,13 @@ export default class UserService {
 
       return userRecord.picture;
     } catch (e) {
-      console.log(e);
+      this.logger.log(e);
       throw e;
     }
   }
 
   public async ChangeConfig(_id: string, config: IUserConfig): Promise<IUserConfig> {
     try {
-      
       const userRecord: IUser = await this.userModel.findOneAndUpdate(
         { _id },
         {
@@ -53,7 +52,28 @@ export default class UserService {
 
       return userRecord.configuration;
     } catch (e) {
-      console.log(e);
+      this.logger.log(e);
+      throw e;
+    }
+  }
+
+  public async ChangeFirstSignin(_id: string): Promise<string> {
+    try {
+      const userRecord: IUser = await this.userModel.findOneAndUpdate(
+        { _id },
+        {
+          $set: {
+            firstSignIn: false,
+          },
+        },
+        { new: true },
+      );
+
+      if (!userRecord) throw new Error("Couldn't update User");
+
+      return 'success';
+    } catch (e) {
+      this.logger.log(e);
       throw e;
     }
   }

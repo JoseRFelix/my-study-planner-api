@@ -15,6 +15,9 @@ export interface IUser {
   email: string;
   verified: boolean;
   verificationToken: string;
+  role: string;
+  fcm: boolean;
+  firstSignIn: boolean;
   picture?: string;
   password?: string;
   googleId?: string;
