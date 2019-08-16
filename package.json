@@ -5,9 +5,9 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
-    "start": "TZ='America/La_Paz' nodemon",
+    "dev": "TZ='America/La_Paz' nodemon",
     "inspect": "TZ='America/La_Paz' nodemon --inspect -L src/app.ts",
-    "heroku-postbuild": "TZ='America/La_Paz' node src/app.ts",
+    "start": "TZ='America/La_Paz' node src/app.ts",
     "test": "jest",
     "lint": "npm run lint:js ",
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
