@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "TZ='America/La_Paz' nodemon",
     "inspect": "TZ='America/La_Paz' nodemon --inspect -L src/app.ts",
-    "start": "TZ='America/La_Paz' node src/app.ts",
+    "start": "TZ='America/La_Paz' node build/app.js",
     "test": "jest",
     "lint": "npm run lint:js ",
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
