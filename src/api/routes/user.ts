@@ -33,8 +33,9 @@ export default (app: Router) => {
         const userRecord = await userModel.findOneAndUpdate({ email: userEmail }, { fcm: false });
       }
 
-      req.logOut();
-      res.json({ message: 'Successful sign out' }).status(200);
+      req.session.destroy(function(err) {
+        res.json({ message: 'Successful sign out' }).status(200);
+      });
     } catch (e) {
       LoggerInstance.error('🔥 error ', e);
       return next(e);
