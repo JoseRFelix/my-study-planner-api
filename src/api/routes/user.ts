@@ -24,7 +24,7 @@ export default (app: Router) => {
     }
   });
 
-  route.get('/signout', async (req: Request, res: Response, next: NextFunction) => {
+  route.get('/signout', isAuthorized, async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userModel: Models.UserModel = Container.get('userModel');
       const userEmail: string = req.user && req.user.toObject().email;

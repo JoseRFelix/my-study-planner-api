@@ -41,9 +41,9 @@ export default class UserSubscriber {
       // TrackerService.track('user.signup', { email, _id })
       // Start your email sequence or whatever
       // MailService.startSequence('user.welcome', { email, name })
-      const Mailer = new MailerService();
+      const mailerInstance = Container.get(MailerService);
 
-      const result = await Mailer.SendWelcomeEmail(user);
+      const result = await mailerInstance.SendWelcomeEmail(user);
 
       if (!result) throw new Error('Could not get result from service');
     } catch (e) {

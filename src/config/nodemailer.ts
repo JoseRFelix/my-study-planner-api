@@ -26,6 +26,6 @@ const transporter = nodemailer.createTransport({
     refreshToken: config.googleRefreshToken,
     accessToken,
   },
-});
+} as any);
 
 export default transporter;

@@ -20,7 +20,9 @@ export default (app: Router) => {
         email: Joi.string()
           .email()
           .required(),
-        password: Joi.string().required(),
+        password: Joi.string()
+          .min(6)
+          .required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
