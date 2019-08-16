@@ -37,6 +37,10 @@ export default class MailerService {
         throw err;
       }
 
+      if (userRecord.googleId) {
+        return { google: true };
+      }
+
       //Generate token for password reset
       const token = cryptoRandomString({ length: 32 });
 

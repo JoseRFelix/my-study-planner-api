@@ -72,6 +72,8 @@ export default (app: Router) => {
 
         if (!mailStatus) {
           res.status(500).json('Error sending email');
+        } else if (mailStatus.google) {
+          res.status(400).json('Google accounts can not restore password.');
         } else {
           res.status(200).json('Successfuly sent');
         }
