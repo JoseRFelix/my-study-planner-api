@@ -49,7 +49,7 @@ export default ({ app, agendaInstance }: { app: express.Application; agendaInsta
       secret: config.sessionSecret,
       resave: true,
       saveUninitialized: true,
-      cookie: { secure: false, domain: 'jfelix.info' },
+      cookie: { secure: false, domain: config.cookiesDomain },
       store: new redisStore({ url: config.redisURL }),
     }),
   );

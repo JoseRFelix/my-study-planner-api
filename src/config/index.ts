@@ -19,6 +19,7 @@ export default {
   serverUrl:
     process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SERVER_URL : process.env.PRODUCTION_SERVER_URL,
 
+  cookiesDomain: process.env.NODE_ENV === 'development' ? 'localhost' : process.env.COOKIES_DOMAIN,
   /**
    * Nodemailer
    */

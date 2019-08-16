@@ -35,6 +35,7 @@ export default (app: Router) => {
 
           res.cookie('IS_LOGGED_IN', true, {
             httpOnly: false,
+            domain: config.cookiesDomain,
           });
 
           return res.json({ user }).status(201);
@@ -88,10 +89,12 @@ export default (app: Router) => {
           res.cookie('IS_LOGGED_IN', true, {
             maxAge: req.session.cookie.maxAge / 1000,
             httpOnly: false,
+            domain: config.cookiesDomain,
           });
         } else {
           res.cookie('IS_LOGGED_IN', true, {
             httpOnly: false,
+            domain: config.cookiesDomain,
           });
           req.session.cookie.expires = false;
         }
