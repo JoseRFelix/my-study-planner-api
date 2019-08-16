@@ -107,11 +107,12 @@ export default (app: Router) => {
     },
   );
 
-  route.get('/google', passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
+  route.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
   route.get('/google/callback', passport.authenticate('google'), (req: Request, res: Response, next: NextFunction) => {
     res.cookie('IS_LOGGED_IN', true, {
       httpOnly: false,
+      domain: config.cookiesDomain,
     });
     res.redirect(config.siteUrl);
   });
