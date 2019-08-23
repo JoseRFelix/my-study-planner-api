@@ -2,7 +2,10 @@ import * as admin from 'firebase-admin';
 import config from '../config';
 
 const serviceAccount = config.firebase;
-console.log(serviceAccount);
+
+//Replace double backslash for single in production
+if (process.env.NODE_ENV === 'production')
+  serviceAccount.private_key = serviceAccount.private_key.replace('\\\\', '\\');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as any),
