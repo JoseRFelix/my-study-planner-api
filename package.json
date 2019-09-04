@@ -25,8 +25,6 @@
   ],
   "author": "Jose Felix",
   "dependencies": {
-    "@types/express-rate-limit": "^3.3.0",
-    "@types/passport-google-oauth2": "^0.1.2",
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",
     "bcrypt": "^3.0.6",
@@ -68,6 +66,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/express-rate-limit": "^3.3.0",
     "@types/agenda": "^2.0.4",
     "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.27",
@@ -80,8 +79,6 @@
     "@types/mongoose": "^5.3.17",
     "@types/node": "^10.12.9",
     "@types/nodemailer": "^6.2.1",
-    "@types/passport": "^1.0.0",
-    "@types/passport-local": "^1.0.33",
     "@types/redis": "^2.8.13",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",

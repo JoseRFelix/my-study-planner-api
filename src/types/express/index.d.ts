@@ -1,10 +1,9 @@
 import { Document, Model } from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
+
 declare global {
   namespace Express {
-    export interface Request {
-      currentUser: IUser & Document;
-    }
+    type User = IUser & Document;
 
     export interface CloudinaryResult {
       public_id: string;
@@ -30,3 +29,4 @@ declare module 'redis' {
     getAsync(key: string): Promise<string>;
   }
 }
+
