@@ -8,13 +8,12 @@
     "dev": "TZ='America/La_Paz' nodemon",
     "inspect": "TZ='America/La_Paz' nodemon --inspect -L src/app.ts",
     "start": "TZ='America/La_Paz' node build/app.js",
-    "test": "jest",
+    "test": "snyk test && jest",
     "lint": "npm run lint:js ",
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
     "lint:js": "npm run lint:eslint src/",
     "lint:fix": "npm run lint:js -- --fix",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn run snyk-protect"
+    "snyk-protect": "snyk protect"
   },
   "keywords": [
     "cron",
@@ -29,7 +28,7 @@
   "dependencies": {
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^3.0.7",
     "bluebird": "^3.5.5",
     "body-parser": "^1.18.2",
     "celebrate": "^11.0.0",
@@ -64,9 +63,9 @@
     "redis": "^2.8.0",
     "redisscan": "^2.0.0",
     "reflect-metadata": "^0.1.12",
+    "snyk": "^1.278.1",
     "typedi": "^0.8.0",
-    "winston": "^3.2.1",
-    "snyk": "^1.258.2"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/express-rate-limit": "3.3.2",
@@ -95,7 +94,6 @@
     "ts-node": "7.0.1",
     "tslint": "5.20.1",
     "typescript": "3.7.3"
-
   },
   "snyk": true
 }

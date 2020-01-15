@@ -1,6 +1,11 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.14.0
-ignore: {}
+version: v1.13.5
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-SUBTEXT-467257:
+    - agendash > hapi > subtext:
+        reason: None given
+        expires: '2020-02-13T05:25:10.792Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   SNYK-JS-HTTPSPROXYAGENT-469131:
