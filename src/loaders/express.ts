@@ -9,6 +9,7 @@ import * as Agenda from 'agenda';
 import routes from '../api';
 import config from '../config';
 import corsOptions from '../config/cors';
+import redisClient from './redis';
 
 export default ({ app, agendaInstance }: { app: express.Application; agendaInstance: Agenda }) => {
   app.use(require('express-status-monitor')());
@@ -50,7 +51,7 @@ export default ({ app, agendaInstance }: { app: express.Application; agendaInsta
       resave: true,
       saveUninitialized: true,
       cookie: { secure: false, domain: config.cookiesDomain },
-      store: new redisStore({ url: config.redisURL }),
+      store: new redisStore({ client: redisClient }),
     }),
   );
 

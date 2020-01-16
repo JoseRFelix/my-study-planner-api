@@ -12,9 +12,9 @@ services:
     ports:
       - '3001:3001'
     depends_on:
-      - db
+      - database
 
-  db:
+  database:
     image: mongo:latest
     ports:
       - '27017:27017'

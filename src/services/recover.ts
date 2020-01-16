@@ -3,7 +3,6 @@ import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDi
 import redisClient from '../loaders/redis';
 import * as bcrypt from 'bcrypt';
 import { Logger } from 'winston';
-import { IUser } from '../interfaces/IUser';
 import config from '../config';
 
 @Service()

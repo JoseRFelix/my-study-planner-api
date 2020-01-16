@@ -4,7 +4,6 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 import jobsLoader from './jobs';
 import './events';
-import MailerService from '../services/mailer';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();

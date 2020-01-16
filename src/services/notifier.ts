@@ -1,7 +1,5 @@
 import { Service, Inject } from 'typedi';
-import redisClient from '../loaders/redis';
 import { IUser } from '../interfaces/IUser';
-import * as redisScan from 'redisscan';
 import admin from '../loaders/firebase';
 
 @Service()
@@ -24,7 +22,7 @@ export default class NotifierService {
   public async MessageAll() {
     try {
       //User tokens with  pending homework or evaluations
-      let userTokens: any = await this.userModel
+      let userTokens: { registrationToken?: string }[] | string[] = await this.userModel
         .find({
           $and: [{ fcm: true }, { $or: [{ 'evaluations.0': { $exists: true } }, { 'homework.0': { $exists: true } }] }],
         })

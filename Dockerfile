@@ -21,13 +21,13 @@ CMD ["npm", "run", "inspect"]
 FROM base as source
 COPY --chown=node:node . .
 
-# FROM source as test
-# ENV NODE_ENV=development
-# ENV PATH=/app/node_modules/.bin:$PATH
-# COPY --from=dev /app/node_modules /app/node_modules
-# RUN eslint .
-# RUN npm test
-# CMD ["npm", "run", "test"]
+FROM source as test
+ENV NODE_ENV=development
+ENV PATH=/app/node_modules/.bin:$PATH
+COPY --from=dev /app/node_modules /app/node_modules
+RUN eslint .
+RUN npm test
+CMD ["npm", "run", "test"]
 
 FROM test as audit
 USER root
