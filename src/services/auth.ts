@@ -83,7 +83,7 @@ export default class AuthService {
       err['status'] = 404;
       throw err;
     }
-    console.log(password, userRecord);
+
     const validPassword = await bcrypt.compare(password, userRecord.password);
 
     if (validPassword) {
