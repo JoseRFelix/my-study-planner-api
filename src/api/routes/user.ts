@@ -6,7 +6,6 @@ import uploadProfilePictureLimiter from '../middlewares/uploadProfilePictureLimi
 import IUserConfig from '../../interfaces/IUserConfig';
 import { Joi, celebrate } from 'celebrate';
 import LoggerInstance from '../../loaders/logger';
-import config from '../../config';
 
 const route = Router();
 
