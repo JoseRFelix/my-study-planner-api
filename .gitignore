@@ -10,4 +10,5 @@ yarn-debug.log*
 yarn-error.log*
 build
 .env
+newrelic_agent.log
 
