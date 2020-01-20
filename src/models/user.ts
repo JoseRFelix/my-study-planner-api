@@ -1,6 +1,12 @@
 import { IUser } from '../interfaces/IUser';
 import * as mongoose from 'mongoose';
 
+const weekdayType = {
+  subject: String,
+  start: String,
+  end: String,
+};
+
 const User = new mongoose.Schema(
   {
     name: {
@@ -89,6 +95,15 @@ const User = new mongoose.Schema(
         },
       },
     ],
+
+    schedule: {
+      monday: [weekdayType],
+      tuesday: [weekdayType],
+      wednesday: [weekdayType],
+      thursday: [weekdayType],
+      friday: [weekdayType],
+      saturday: [weekdayType],
+    },
 
     semesters: [
       {
