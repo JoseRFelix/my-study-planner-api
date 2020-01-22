@@ -63,7 +63,7 @@
     "redis": "^2.8.0",
     "redisscan": "^2.0.0",
     "reflect-metadata": "^0.1.12",
-    "snyk": "^1.278.1",
+    "snyk": "^1.278.2",
     "typedi": "^0.8.0",
     "winston": "^3.2.1"
   },
