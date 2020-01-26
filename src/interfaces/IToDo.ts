@@ -1,8 +1,8 @@
-import { Urgency } from './IUser';
+import { Urgency } from '.';
 
 export default interface IToDo {
   _id: string;
-  task: String;
+  task: string;
   urgency: Urgency;
   done: boolean;
 }

@@ -4,7 +4,7 @@ import IEvaluation from '../interfaces/IEvaluation';
 
 @Service()
 export default class EvaluationService {
-  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
+  constructor(@Inject('userModel') private userModel: Models.UserModel) {}
 
   public async Add(user: IUser, evaluation: IEvaluation): Promise<IEvaluation> {
     try {

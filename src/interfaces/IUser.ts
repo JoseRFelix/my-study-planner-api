@@ -1,7 +1,4 @@
-import IEvaluation from './IEvaluation';
-import IToDo from './IToDo';
-import IHomework from './IHomework';
-import IUserConfig from './IUserConfig';
+import { IEvaluation, IToDo, IHomework, IUserConfig } from '.';
 
 export enum Urgency {
   important = 'IMPORTANT',
@@ -26,7 +23,7 @@ export interface IUser {
   evaluations?: IEvaluation[];
   toDos?: IToDo[];
   homework?: IHomework[];
-  semesters?: { _id: String; grades: { subject: String; literalGrade: String; grade: number; credits: number }[] }[];
+  semesters?: { _id: string; grades: { subject: string; literalGrade: string; grade: number; credits: number }[] }[];
 }
 
 export interface IUserInputDTO {

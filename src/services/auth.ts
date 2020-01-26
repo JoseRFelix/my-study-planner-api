@@ -90,11 +90,9 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
 
-      user.evaluations = await userRecord.evaluations.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
+      user.evaluations = userRecord.evaluations.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-      user.homework = await userRecord.homework.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      user.homework = userRecord.homework.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
       return user;
     } else {
@@ -166,13 +164,11 @@ export default class AuthService {
 
     if (!userRecord) throw new Error('User not found');
 
-    userRecord.evaluations = await userRecord.evaluations.sort(
+    userRecord.evaluations = userRecord.evaluations.sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
-    userRecord.homework = await userRecord.homework.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
+    userRecord.homework = userRecord.homework.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     return userRecord;
   }

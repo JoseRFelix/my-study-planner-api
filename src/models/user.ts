@@ -1,11 +1,6 @@
 import { IUser } from '../interfaces/IUser';
+import { evaluationSchema, homeworkSchema } from './subdocuments';
 import * as mongoose from 'mongoose';
-
-const weekdayType = {
-  subject: String,
-  start: String,
-  end: String,
-};
 
 const User = new mongoose.Schema(
   {
@@ -58,52 +53,15 @@ const User = new mongoose.Schema(
         default: false,
       },
     },
-
-    evaluations: [
-      {
-        subject: String,
-        evaluationType: String,
-        date: Date,
-        urgency: String,
-        description: String,
-        done: Boolean,
-        createdBy: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-        },
-      },
-    ],
-
+    homework: [homeworkSchema],
+    evaluations: [evaluationSchema],
     toDos: [
       {
-        task: String,
-        urgency: String,
-        done: Boolean,
+        task: { type: String, required: true },
+        urgency: { type: String, required: true, enum: ['IMPORTANT', 'MODERATE', 'CHILL'] },
+        done: { type: Boolean, default: false },
       },
     ],
-
-    homework: [
-      {
-        subject: String,
-        date: Date,
-        urgency: String,
-        description: String,
-        done: Boolean,
-        createdBy: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-        },
-      },
-    ],
-
-    schedule: {
-      monday: [weekdayType],
-      tuesday: [weekdayType],
-      wednesday: [weekdayType],
-      thursday: [weekdayType],
-      friday: [weekdayType],
-      saturday: [weekdayType],
-    },
 
     semesters: [
       {
