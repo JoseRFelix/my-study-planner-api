@@ -1,4 +1,4 @@
-enum weekdays {
+enum Weekdays {
   monday = 'MONDAY',
   tuesday = 'TUESDAY',
   wednesday = 'WEDNESDAY',
@@ -8,8 +8,12 @@ enum weekdays {
   sunday = 'SUNDAY',
 }
 
-export default interface ISchedule {
-  day: weekdays;
-  start: number;
-  end: number;
-}
+type ISchedule = {
+  [key in Weekdays]?: {
+    start: number;
+    end: number;
+    classroom: string;
+  };
+};
+
+export default ISchedule;

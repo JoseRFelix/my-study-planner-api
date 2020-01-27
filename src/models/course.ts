@@ -9,16 +9,14 @@ const Course = new mongoose.Schema(
       required: [true, 'Please enter a course name'],
       index: true,
     },
-    schedule: [
-      {
-        day: {
-          type: String,
-          enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
-        },
+    schedule: {
+      type: Map,
+      of: {
         start: Number,
         end: Number,
+        classroom: String,
       },
-    ],
+    },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
