@@ -5,6 +5,7 @@ import { Container } from 'typedi';
 import { IUser } from '../../interfaces/IUser';
 import HomeworkService from '../../services/homework';
 import IHomework from '../../interfaces/IHomework';
+import { homeworkDTOJoi, homeworkJoi } from '../validation';
 
 const route = Router();
 
@@ -14,14 +15,7 @@ export default (app: Router) => {
   route.post(
     '/add',
     celebrate({
-      body: Joi.object({
-        subject: Joi.string().required(),
-        urgency: Joi.string()
-          .valid('chill', 'normal', 'important')
-          .required(),
-        description: Joi.string().allow(null, ''),
-        date: Joi.date().required(),
-      }),
+      body: Joi.object(homeworkDTOJoi),
     }),
     isAuthorized,
     async (req: Request, res: Response) => {
@@ -40,17 +34,7 @@ export default (app: Router) => {
   route.patch(
     '/update',
     celebrate({
-      body: Joi.object({
-        _id: Joi.string().required(),
-        subject: Joi.string().required(),
-        urgency: Joi.string()
-          .valid('chill', 'normal', 'important')
-          .required(),
-        description: Joi.string().allow(null, ''),
-        date: Joi.date().required(),
-        done: Joi.boolean().default(false),
-        createdBy: Joi.object({ _id: Joi.string().required(), name: Joi.string().required(), picture: Joi.string() }),
-      }),
+      body: Joi.object(homeworkJoi),
     }),
     isAuthorized,
     async (req: Request, res: Response) => {

@@ -4,7 +4,7 @@ import IHomework from '../interfaces/IHomework';
 
 @Service()
 export default class HomeworkService {
-  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
+  constructor(@Inject('userModel') private userModel: Models.UserModel) {}
 
   public async Add(user: IUser, homework: IHomework): Promise<IHomework> {
     try {

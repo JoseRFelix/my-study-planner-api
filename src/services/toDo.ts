@@ -4,7 +4,7 @@ import IToDo from '../interfaces/IToDo';
 
 @Service()
 export default class ToDoService {
-  constructor(@Inject('userModel') private userModel : Models.UserModel) {}
+  constructor(@Inject('userModel') private userModel: Models.UserModel) {}
 
   public async Add(user: IUser, toDo: IToDo): Promise<IToDo> {
     try {

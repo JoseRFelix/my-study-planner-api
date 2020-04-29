@@ -89,16 +89,7 @@ export default (app: Router) => {
       try {
         if (req.body.remember) {
           req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; //Expires in 30 days
-          res.cookie('IS_LOGGED_IN', true, {
-            maxAge: req.session.cookie.maxAge,
-            httpOnly: false,
-            domain: config.cookiesDomain,
-          });
         } else {
-          res.cookie('IS_LOGGED_IN', true, {
-            httpOnly: false,
-            domain: config.cookiesDomain,
-          });
           req.session.cookie.expires = false;
         }
 

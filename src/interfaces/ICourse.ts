@@ -1,7 +1,7 @@
 import { IEvaluation, IHomework, ISchedule, IUser } from '.';
 
 export default interface ICourse {
-  _id?: string;
+  _id: string;
   name: string;
   schedule: ISchedule;
   evaluations?: IEvaluation[];
