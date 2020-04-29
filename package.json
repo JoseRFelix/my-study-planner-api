@@ -70,7 +70,7 @@
   },
   "devDependencies": {
     "@types/express-rate-limit": "3.3.2",
-    "@types/agenda": "2.0.5",
+    "@types/agenda": "2.0.7",
     "@types/bcrypt": "3.0.0",
     "@types/bluebird": "3.5.27",
     "@types/connect-redis": "0.0.10",
