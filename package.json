@@ -1,8 +1,9 @@
 {
   "name": "my-study-planner-api",
   "version": "0.0.1",
-  "description": "My Study Planner Bulletproof node js api",
+  "description": "My Study Planner Bulletproof node api",
   "main": "src/app.ts",
+  "author": "Jose Felix",
   "scripts": {
     "build": "tsc",
     "dev": "TZ='America/La_Paz' nodemon",
@@ -13,7 +14,8 @@
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
     "lint:js": "npm run lint:eslint src/",
     "lint:fix": "npm run lint:js -- --fix",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "prettier": "prettier --write src/**/*"
   },
   "keywords": [
     "cron",
@@ -24,7 +26,6 @@
     "node",
     "express"
   ],
-  "author": "Jose Felix",
   "dependencies": {
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",

@@ -1,5 +1,6 @@
 import { Document, Model } from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
+import { ICourse } from '../../interfaces';
 
 declare global {
   namespace Express {
@@ -20,6 +21,7 @@ declare global {
 
   namespace Models {
     export type UserModel = Model<IUser & Document>;
+    export type CourseModel = Model<ICourse & Document>;
   }
 }
 
@@ -29,4 +31,3 @@ declare module 'redis' {
     getAsync(key: string): Promise<string>;
   }
 }
-

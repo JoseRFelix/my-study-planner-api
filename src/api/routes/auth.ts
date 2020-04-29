@@ -5,6 +5,7 @@ import { IUserInputDTO } from '../../interfaces/IUser';
 import { celebrate, Joi } from 'celebrate';
 import AuthService from '../../services/auth';
 import config from '../../config';
+import { Logger } from 'winston';
 
 const route = Router();
 
@@ -25,6 +26,9 @@ export default (app: Router) => {
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
+
       try {
         const authServiceInstance = Container.get(AuthService);
         const user = await authServiceInstance.SignUp(req.body as IUserInputDTO);
@@ -59,7 +63,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const authServiceInstance = Container.get(AuthService);
-        const user = await authServiceInstance.VerifyEmail(req.query.email, req.query.token);
+        await authServiceInstance.VerifyEmail(req.query.email, req.query.token);
 
         res.redirect(config.siteUrl);
       } catch (e) {
@@ -85,16 +89,7 @@ export default (app: Router) => {
       try {
         if (req.body.remember) {
           req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; //Expires in 30 days
-          res.cookie('IS_LOGGED_IN', true, {
-            maxAge: req.session.cookie.maxAge,
-            httpOnly: false,
-            domain: config.cookiesDomain,
-          });
         } else {
-          res.cookie('IS_LOGGED_IN', true, {
-            httpOnly: false,
-            domain: config.cookiesDomain,
-          });
           req.session.cookie.expires = false;
         }
 

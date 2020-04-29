@@ -1,9 +1,7 @@
 import { Service, Inject } from 'typedi';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import redisClient from '../loaders/redis';
-import * as bcrypt from 'bcrypt';
 import { Logger } from 'winston';
-import config from '../config';
 
 @Service()
 export default class LinkAccountService {

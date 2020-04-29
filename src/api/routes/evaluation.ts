@@ -5,6 +5,7 @@ import { Container } from 'typedi';
 import EvaluationService from '../../services/evaluation';
 import IEvaluation from '../../interfaces/IEvaluation';
 import { IUser } from '../../interfaces/IUser';
+import { evaluationDTOJoi, evaluationJoi } from '../validation';
 
 const route = Router();
 
@@ -14,17 +15,7 @@ export default (app: Router) => {
   route.post(
     '/add',
     celebrate({
-      body: Joi.object({
-        subject: Joi.string().required(),
-        evaluationType: Joi.string()
-          .valid('quiz', 'test')
-          .required(),
-        urgency: Joi.string()
-          .valid('chill', 'normal', 'important')
-          .required(),
-        description: Joi.string().allow(null, ""),
-        date: Joi.date().required(),
-      }),
+      body: Joi.object(evaluationDTOJoi),
     }),
     isAuthorized,
     async (req: Request, res: Response) => {
@@ -43,20 +34,7 @@ export default (app: Router) => {
   route.patch(
     '/update',
     celebrate({
-      body: Joi.object({
-        _id: Joi.string().required(),
-        subject: Joi.string().required(),
-        evaluationType: Joi.string()
-          .valid('quiz', 'test')
-          .required(),
-        urgency: Joi.string()
-          .valid('chill', 'normal', 'important')
-          .required(),
-        description: Joi.string().allow(null, ""),
-        date: Joi.date().required(),
-        done: Joi.boolean().default(false),
-        createdBy: Joi.object({ _id: Joi.string().required(), name: Joi.string().required(), picture: Joi.string() }),
-      }),
+      body: Joi.object(evaluationJoi),
     }),
     isAuthorized,
     async (req: Request, res: Response) => {

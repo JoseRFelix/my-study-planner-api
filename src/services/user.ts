@@ -7,7 +7,7 @@ import IUserConfig from '../interfaces/IUserConfig';
 export default class UserService {
   constructor(@Inject('userModel') private userModel: Models.UserModel, @Inject('logger') private logger) {}
 
-  public async UploadProfileImage(user: IUser, image: string): Promise<String> {
+  public async UploadProfileImage(user: IUser, image: string): Promise<string> {
     try {
       const result: Express.CloudinaryResult = await cloudinary.uploader.upload(image, {
         width: 200,

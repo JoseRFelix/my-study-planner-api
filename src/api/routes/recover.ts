@@ -1,7 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
-import config from '../../config';
 import MailerService from '../../services/mailer';
 import RecoverService from '../../services/recover';
 import LoggerInstance from '../../loaders/logger';
@@ -16,13 +15,15 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         token: Joi.string().required(),
-        password: Joi.string().required(),
+        password: Joi.string()
+          .min(6)
+          .required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const recoverServiceInstance = Container.get(RecoverService);
-        const response = await recoverServiceInstance.ChangePassword(req.body.token, req.body.password);
+        await recoverServiceInstance.ChangePassword(req.body.token, req.body.password);
 
         res.status(200).json('Success');
       } catch (e) {

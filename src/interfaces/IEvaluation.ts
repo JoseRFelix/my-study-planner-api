@@ -1,16 +1,16 @@
 import { Urgency } from './IUser';
 
 export default interface IEvaluation {
-  _id: String;
-  subject: String;
-  evaluationType: String;
+  _id: string;
+  subject: string;
+  evaluationType: string;
   date: Date;
   urgency: Urgency;
-  description: String;
+  description: string;
   done: boolean;
   createdBy: {
-    _id: String;
-    name: String;
-    picture: String;
+    _id: string;
+    name: string;
+    picture: string;
   };
 }

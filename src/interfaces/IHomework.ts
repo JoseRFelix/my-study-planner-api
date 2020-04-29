@@ -1,15 +1,15 @@
 import { Urgency } from './IUser';
 
 export default interface IHomework {
-  _id: String;
-  subject: String;
+  _id: string;
+  subject: string;
   date: Date;
   urgency: Urgency;
-  description: String;
-  done: Boolean;
+  description: string;
+  done: boolean;
   createdBy: {
-    _id: String;
-    name: String;
-    picture: String;
+    _id: string;
+    name: string;
+    picture: string;
   };
 }
