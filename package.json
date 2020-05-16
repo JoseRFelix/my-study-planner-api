@@ -29,7 +29,7 @@
   "dependencies": {
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^4.0.0",
     "bluebird": "^3.5.5",
     "body-parser": "^1.18.2",
     "celebrate": "^11.0.0",
