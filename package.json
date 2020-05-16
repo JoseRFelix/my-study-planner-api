@@ -27,7 +27,7 @@
     "express"
   ],
   "dependencies": {
-    "agenda": "^2.0.2",
+    "agenda": "^3.0.0",
     "agendash": "^1.0.0",
     "bcrypt": "^3.0.7",
     "bluebird": "^3.5.5",
