@@ -1,6 +1,6 @@
-import { IUser } from '../interfaces/IUser';
-import { evaluationSchema, homeworkSchema } from './subdocuments';
-import * as mongoose from 'mongoose';
+import {IUser} from '../interfaces/IUser'
+import {evaluationSchema, homeworkSchema} from './subdocuments'
+import * as mongoose from 'mongoose'
 
 const User = new mongoose.Schema(
   {
@@ -32,7 +32,7 @@ const User = new mongoose.Schema(
 
     registrationToken: String,
 
-    firstSignIn: { type: Boolean, default: true, required: true },
+    firstSignIn: {type: Boolean, default: true, required: true},
 
     verified: {
       type: Boolean,
@@ -57,9 +57,13 @@ const User = new mongoose.Schema(
     evaluations: [evaluationSchema],
     toDos: [
       {
-        task: { type: String, required: true },
-        urgency: { type: String, required: true, enum: ['IMPORTANT', 'MODERATE', 'CHILL'] },
-        done: { type: Boolean, default: false },
+        task: {type: String, required: true},
+        urgency: {
+          type: String,
+          required: true,
+          enum: ['IMPORTANT', 'MODERATE', 'CHILL'],
+        },
+        done: {type: Boolean, default: false},
       },
     ],
 
@@ -80,7 +84,7 @@ const User = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true },
-);
+  {timestamps: true},
+)
 
-export default mongoose.model<IUser & mongoose.Document>('User', User);
+export default mongoose.model<IUser & mongoose.Document>('User', User)

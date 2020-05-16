@@ -1,3 +1,3 @@
 export default interface IUserConfig {
-  darkMode: boolean;
+  darkMode: boolean
 }

@@ -1,28 +1,28 @@
-import { Router, Request, Response } from 'express';
-import { isAuthorized } from '../middlewares';
-import { celebrate, Joi } from 'celebrate';
-import { Container } from 'typedi';
-import CourseService from '../../services/course';
-import { IUser } from '../../interfaces/IUser';
-import { ICourse } from '../../interfaces';
-import { homeworkJoi, evaluationJoi } from '../validation';
+import {Router, Request, Response} from 'express'
+import {isAuthorized} from '../middlewares'
+import {celebrate, Joi} from 'celebrate'
+import {Container} from 'typedi'
+import CourseService from '../../services/course'
+import {IUser} from '../../interfaces/IUser'
+import {ICourse} from '../../interfaces'
+import {homeworkJoi, evaluationJoi} from '../validation'
 
-const route = Router();
+const route = Router()
 
 export default (app: Router) => {
-  app.use('/course', route);
+  app.use('/course', route)
 
   route.get('/', isAuthorized, async (req: Request, res: Response) => {
     try {
-      const courseServiceInstance = Container.get(CourseService);
-      const course = await courseServiceInstance.get(req.user as IUser);
+      const courseServiceInstance = Container.get(CourseService)
+      const course = await courseServiceInstance.get(req.user as IUser)
 
-      res.json({ course }).status(200);
+      res.json({course}).status(200)
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
-  });
+  })
 
   route.get(
     '/:id',
@@ -34,17 +34,17 @@ export default (app: Router) => {
     isAuthorized,
     async (req: Request, res: Response) => {
       try {
-        const { id } = req.query;
-        const courseServiceInstance = Container.get(CourseService);
-        const course = await courseServiceInstance.getById(id);
+        const {id} = req.query
+        const courseServiceInstance = Container.get(CourseService)
+        const course = await courseServiceInstance.getById(id)
 
-        res.json({ course }).status(200);
+        res.json({course}).status(200)
       } catch (e) {
-        console.log(e);
-        throw e;
+        console.log(e)
+        throw e
       }
     },
-  );
+  )
 
   route.post(
     '/add',
@@ -66,16 +66,19 @@ export default (app: Router) => {
     isAuthorized,
     async (req: Request, res: Response) => {
       try {
-        const courseServiceInstance = Container.get(CourseService);
-        const course = await courseServiceInstance.Add(req.user as IUser, req.body as ICourse);
+        const courseServiceInstance = Container.get(CourseService)
+        const course = await courseServiceInstance.Add(
+          req.user as IUser,
+          req.body as ICourse,
+        )
 
-        res.json({ course }).status(200);
+        res.json({course}).status(200)
       } catch (e) {
-        console.log(e);
-        throw e;
+        console.log(e)
+        throw e
       }
     },
-  );
+  )
 
   route.patch(
     '/update',
@@ -93,12 +96,8 @@ export default (app: Router) => {
             }),
           )
           .required(),
-        homework: Joi.array()
-          .items(Joi.object(homeworkJoi))
-          .required(),
-        evaluations: Joi.array()
-          .items(Joi.object(evaluationJoi))
-          .required(),
+        homework: Joi.array().items(Joi.object(homeworkJoi)).required(),
+        evaluations: Joi.array().items(Joi.object(evaluationJoi)).required(),
         members: Joi.array().items(Joi.string()),
         createdBy: Joi.string(),
       }),
@@ -106,16 +105,19 @@ export default (app: Router) => {
     isAuthorized,
     async (req: Request, res: Response) => {
       try {
-        const courseServiceInstance = Container.get(CourseService);
-        const course = await courseServiceInstance.Update(req.user as IUser, req.body as ICourse);
+        const courseServiceInstance = Container.get(CourseService)
+        const course = await courseServiceInstance.Update(
+          req.user as IUser,
+          req.body as ICourse,
+        )
 
-        res.json({ course }).status(200);
+        res.json({course}).status(200)
       } catch (e) {
-        console.log(e);
-        throw e;
+        console.log(e)
+        throw e
       }
     },
-  );
+  )
 
   route.delete(
     '/delete',
@@ -127,14 +129,14 @@ export default (app: Router) => {
     isAuthorized,
     async (req: Request, res: Response) => {
       try {
-        const courseServiceInstance = Container.get(CourseService);
-        await courseServiceInstance.Delete(req.user._id, req.body._id);
+        const courseServiceInstance = Container.get(CourseService)
+        await courseServiceInstance.Delete(req.user._id, req.body._id)
 
-        res.json('done').status(200);
+        res.json('done').status(200)
       } catch (e) {
-        console.log(e);
-        throw e;
+        console.log(e)
+        throw e
       }
     },
-  );
-};
+  )
+}

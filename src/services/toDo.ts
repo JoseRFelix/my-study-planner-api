@@ -1,6 +1,6 @@
-import { Service, Inject } from 'typedi';
-import { IUser } from '../interfaces/IUser';
-import IToDo from '../interfaces/IToDo';
+import {Service, Inject} from 'typedi'
+import {IUser} from '../interfaces/IUser'
+import IToDo from '../interfaces/IToDo'
 
 @Service()
 export default class ToDoService {
@@ -8,24 +8,24 @@ export default class ToDoService {
 
   public async Add(user: IUser, toDo: IToDo): Promise<IToDo> {
     try {
-      toDo.done = false;
+      toDo.done = false
 
       const userRecord: IUser = await this.userModel.findByIdAndUpdate(
         user._id,
         {
-          $push: { toDos: toDo },
+          $push: {toDos: toDo},
         },
-        { new: true },
-      );
+        {new: true},
+      )
 
       if (!userRecord) {
-        throw new Error('Could not add evaluation');
+        throw new Error('Could not add evaluation')
       }
 
-      return userRecord.toDos[userRecord.toDos.length - 1]; //Get just added to-do
+      return userRecord.toDos[userRecord.toDos.length - 1] //Get just added to-do
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
@@ -43,34 +43,34 @@ export default class ToDoService {
             'toDos.$.done': toDo.done,
           },
         },
-        { new: true },
-      );
+        {new: true},
+      )
 
       if (!userRecord) {
-        throw new Error('Could not update to-do');
+        throw new Error('Could not update to-do')
       }
 
-      return toDo;
+      return toDo
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
-  public async Delete(id: string, toDoId: string): Promise<{ user: IUser }> {
+  public async Delete(id: string, toDoId: string): Promise<{user: IUser}> {
     try {
       const userRecord = await this.userModel.findByIdAndUpdate(id, {
-        $pull: { toDos: { _id: toDoId } },
-      });
+        $pull: {toDos: {_id: toDoId}},
+      })
 
       if (!userRecord) {
-        throw new Error('Could not delete to-do');
+        throw new Error('Could not delete to-do')
       }
 
-      return userRecord.toObject();
+      return userRecord.toObject()
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 }

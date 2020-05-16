@@ -1,11 +1,11 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv'
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const envFound = dotenv.config();
+const envFound = dotenv.config()
 if (!envFound) {
-  throw new Error("⚠️  Couldn't find .env file  ⚠️");
+  throw new Error("⚠️  Couldn't find .env file  ⚠️")
 }
 
 export default {
@@ -15,11 +15,19 @@ export default {
 
   redisURL: process.env.REDIS_URL,
 
-  siteUrl: process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SITE_URL : process.env.PRODUCTION_SITE_URL,
+  siteUrl:
+    process.env.NODE_ENV === 'development'
+      ? process.env.DEVELOPMENT_SITE_URL
+      : process.env.PRODUCTION_SITE_URL,
   serverUrl:
-    process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_SERVER_URL : process.env.PRODUCTION_SERVER_URL,
+    process.env.NODE_ENV === 'development'
+      ? process.env.DEVELOPMENT_SERVER_URL
+      : process.env.PRODUCTION_SERVER_URL,
 
-  cookiesDomain: process.env.NODE_ENV === 'development' ? 'localhost' : process.env.COOKIES_DOMAIN,
+  cookiesDomain:
+    process.env.NODE_ENV === 'development'
+      ? 'localhost'
+      : process.env.COOKIES_DOMAIN,
   /**
    * Nodemailer
    */
@@ -85,7 +93,8 @@ export default {
     client_id: process.env.FIREBASE_CLIENT_ID,
     auth_uri: process.env.FIREBASE_AUTH_URI,
     token_uri: process.env.FIREBASE_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+    auth_provider_x509_cert_url:
+      process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
   },
-};
+}

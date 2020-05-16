@@ -1,6 +1,6 @@
-import config from '../config';
+import config from '../config'
 
-export default function recoverPasswordEmail(name: string, token: string, email: string) {
+export default function recoverPasswordEmail(name: string, token: string) {
   return `<!DOCTYPE html>
   <html>
     <head>
@@ -179,5 +179,5 @@ export default function recoverPasswordEmail(name: string, token: string, email:
       </table>
     </body>
   </html>
-  `;
+  `
 }

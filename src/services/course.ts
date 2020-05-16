@@ -1,7 +1,6 @@
-import { Service, Inject } from 'typedi';
-import { IUser } from '../interfaces/IUser';
-import IEvaluation from '../interfaces/IEvaluation';
-import { ICourse } from '../interfaces';
+import {Service, Inject} from 'typedi'
+import {IUser} from '../interfaces/IUser'
+import {ICourse} from '../interfaces'
 
 @Service()
 export default class CourseService {
@@ -12,35 +11,35 @@ export default class CourseService {
 
   public async get(user: IUser): Promise<ICourse[]> {
     try {
-      let courseRecords = await this.courseModel
-        .find({ members: user._id })
-        .select('name schedule members homework evaluations createdBy');
+      const courseRecords = await this.courseModel
+        .find({members: user._id})
+        .select('name schedule members homework evaluations createdBy')
 
       if (!courseRecords) {
-        throw new Error("Cannot get user's courses");
+        throw new Error("Cannot get user's courses")
       }
 
-      return courseRecords;
+      return courseRecords
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
   public async getById(id: string) {
     try {
-      let courseRecord = await this.courseModel
+      const courseRecord = await this.courseModel
         .findById(id)
-        .select('name schedule members homework evaluations createdBy');
+        .select('name schedule members homework evaluations createdBy')
 
       if (!courseRecord) {
-        throw new Error('Cannot get course');
+        throw new Error('Cannot get course')
       }
 
-      return courseRecord;
+      return courseRecord
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
@@ -50,29 +49,29 @@ export default class CourseService {
         _id: user._id,
         name: user.name,
         picture: user.picture,
-      };
-      course.members = [course.createdBy];
+      }
+      course.members = [course.createdBy]
 
-      let courseRecord = await this.courseModel.create(course);
+      const courseRecord = await this.courseModel.create(course)
 
-      Reflect.deleteProperty(courseRecord, 'updatedAt');
-      Reflect.deleteProperty(courseRecord, 'createdAt');
+      Reflect.deleteProperty(courseRecord, 'updatedAt')
+      Reflect.deleteProperty(courseRecord, 'createdAt')
 
       if (!courseRecord) {
-        throw new Error('Course cannot be created');
+        throw new Error('Course cannot be created')
       }
 
-      return courseRecord;
+      return courseRecord
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
   public async Update(user: IUser, course: ICourse): Promise<ICourse> {
     try {
-      Reflect.deleteProperty(course, 'createdBy');
-      Reflect.deleteProperty(course, 'members');
+      Reflect.deleteProperty(course, 'createdBy')
+      Reflect.deleteProperty(course, 'members')
 
       const response = await this.courseModel
         .findOneAndUpdate(
@@ -81,18 +80,18 @@ export default class CourseService {
             members: user._id,
           },
           course,
-          { new: true },
+          {new: true},
         )
-        .select('name schedule members homework evaluations createdBy');
+        .select('name schedule members homework evaluations createdBy')
 
       if (!response) {
-        throw new Error('Could not update evaluation');
+        throw new Error('Could not update evaluation')
       }
 
-      return course;
+      return course
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
@@ -101,23 +100,26 @@ export default class CourseService {
     courseId: string,
   ): Promise<
     {
-      ok?: number;
-      n?: number;
+      ok?: number
+      n?: number
     } & {
-      deletedCount?: number;
+      deletedCount?: number
     }
   > {
     try {
-      const response = await this.courseModel.deleteOne({ _id: courseId, members: userId });
+      const response = await this.courseModel.deleteOne({
+        _id: courseId,
+        members: userId,
+      })
 
       if (!response) {
-        throw new Error('Could not delete evaluation');
+        throw new Error('Could not delete evaluation')
       }
 
-      return response;
+      return response
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 }

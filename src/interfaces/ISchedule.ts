@@ -10,10 +10,10 @@ enum Weekdays {
 
 type ISchedule = {
   [key in Weekdays]?: {
-    start: number;
-    end: number;
-    classroom: string;
-  };
-};
+    start: number
+    end: number
+    classroom: string
+  }
+}
 
-export default ISchedule;
+export default ISchedule

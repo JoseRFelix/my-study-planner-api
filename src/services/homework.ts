@@ -1,6 +1,6 @@
-import { Service, Inject } from 'typedi';
-import { IUser } from '../interfaces/IUser';
-import IHomework from '../interfaces/IHomework';
+import {Service, Inject} from 'typedi'
+import {IUser} from '../interfaces/IUser'
+import IHomework from '../interfaces/IHomework'
 
 @Service()
 export default class HomeworkService {
@@ -8,31 +8,31 @@ export default class HomeworkService {
 
   public async Add(user: IUser, homework: IHomework): Promise<IHomework> {
     try {
-      homework.done = false;
+      homework.done = false
       homework.createdBy = {
         _id: user._id,
         name: user.name,
         picture: user.picture,
-      };
+      }
 
       const userRecord: IUser = await this.userModel
         .findByIdAndUpdate(
           user._id,
           {
-            $push: { homework },
+            $push: {homework},
           },
-          { new: true },
+          {new: true},
         )
-        .populate({ path: 'homework.createdBy', select: '_id name picture' });
+        .populate({path: 'homework.createdBy', select: '_id name picture'})
 
       if (!userRecord) {
-        throw new Error('Could not add homework');
+        throw new Error('Could not add homework')
       }
 
-      return userRecord.homework[userRecord.homework.length - 1]; //Get just added homework
+      return userRecord.homework[userRecord.homework.length - 1] //Get just added homework
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
@@ -42,7 +42,7 @@ export default class HomeworkService {
         _id: user._id,
         name: user.name,
         picture: user.picture,
-      };
+      }
 
       const userRecord = await this.userModel
         .findOneAndUpdate(
@@ -60,35 +60,35 @@ export default class HomeworkService {
               'homework.$.createdBy': homework.createdBy,
             },
           },
-          { new: true },
+          {new: true},
         )
-        .populate({ path: 'homework.createdBy', select: '_id name picture' });
+        .populate({path: 'homework.createdBy', select: '_id name picture'})
 
       if (!userRecord) {
-        throw new Error('Could not update homework');
+        throw new Error('Could not update homework')
       }
 
-      return homework;
+      return homework
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 
-  public async Delete(id: string, homeworkId: string): Promise<{ user: IUser }> {
+  public async Delete(id: string, homeworkId: string): Promise<{user: IUser}> {
     try {
       const userRecord = await this.userModel.findByIdAndUpdate(id, {
-        $pull: { homework: { _id: homeworkId } },
-      });
+        $pull: {homework: {_id: homeworkId}},
+      })
 
       if (!userRecord) {
-        throw new Error('Could not delete homework');
+        throw new Error('Could not delete homework')
       }
 
-      return userRecord.toObject();
+      return userRecord.toObject()
     } catch (e) {
-      console.log(e);
-      throw e;
+      console.log(e)
+      throw e
     }
   }
 }

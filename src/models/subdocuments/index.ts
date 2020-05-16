@@ -1,2 +1,2 @@
-export { default as evaluationSchema } from './evaluation';
-export { default as homeworkSchema } from './homework';
+export {default as evaluationSchema} from './evaluation'
+export {default as homeworkSchema} from './homework'

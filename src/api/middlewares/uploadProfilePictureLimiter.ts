@@ -1,5 +1,5 @@
-import * as rateLimit from 'express-rate-limit';
-import { Request, Response } from 'express-serve-static-core';
+import * as rateLimit from 'express-rate-limit'
+import {Request, Response} from 'express-serve-static-core'
 
 const uploadProfilePictureLimiter = new rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
@@ -9,8 +9,8 @@ const uploadProfilePictureLimiter = new rateLimit({
       errors: {
         message: 'Too many pictures uploaded, please try again after an hour',
       },
-    });
+    })
   },
-});
+})
 
-export default uploadProfilePictureLimiter;
+export default uploadProfilePictureLimiter

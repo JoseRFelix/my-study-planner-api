@@ -3,4 +3,4 @@ export default {
     signUp: 'onUserSignUp',
     signIn: 'onUserSignIn',
   },
-};
+}

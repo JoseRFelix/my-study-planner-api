@@ -1,6 +1,6 @@
-import { ICourse } from '../interfaces';
-import { evaluationSchema, homeworkSchema } from './subdocuments';
-import * as mongoose from 'mongoose';
+import {ICourse} from '../interfaces'
+import {evaluationSchema, homeworkSchema} from './subdocuments'
+import * as mongoose from 'mongoose'
 
 const Course = new mongoose.Schema(
   {
@@ -30,7 +30,7 @@ const Course = new mongoose.Schema(
       ref: 'User',
     },
   },
-  { timestamps: true },
-);
+  {timestamps: true},
+)
 
-export default mongoose.model<ICourse & mongoose.Document>('Course', Course);
+export default mongoose.model<ICourse & mongoose.Document>('Course', Course)
