@@ -54,12 +54,17 @@ export default class CourseService {
 
       const courseRecord = await this.courseModel.create(course)
 
-      Reflect.deleteProperty(courseRecord, 'updatedAt')
-      Reflect.deleteProperty(courseRecord, 'createdAt')
-
       if (!courseRecord) {
         throw new Error('Course cannot be created')
       }
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      courseRecord.createdAt = undefined
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      courseRecord.updatedAt = undefined
+      courseRecord.__v = undefined
 
       return courseRecord
     } catch (e) {
@@ -88,7 +93,7 @@ export default class CourseService {
         throw new Error('Could not update evaluation')
       }
 
-      return course
+      return response
     } catch (e) {
       console.log(e)
       throw e
