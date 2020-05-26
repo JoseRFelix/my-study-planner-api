@@ -1,4 +1,4 @@
-FROM node:12.14 as base
+FROM node:12.17 as base
 ENV TZ=America/La_Paz
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV NODE_ENV=production
