@@ -61,7 +61,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
-    "redis": "^2.8.0",
+    "redis": "^3.0.0",
     "redisscan": "^2.0.0",
     "reflect-metadata": "^0.1.12",
     "snyk": "^1.278.1",
